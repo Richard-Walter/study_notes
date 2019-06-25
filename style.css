@@ -32,15 +32,14 @@ input[type=text]:focus{
 #pinnedNote { background: hsl(24, 76%, 45%);}
 #note1 { background: #1E88E5;}
 #note2 {background: #673ab7;}
-#note3 {background: #ff9800;}
-#blank {height: 40px}
+
 
 /* input:placeholder-shown {
   font-size: 75%;
 } */
 
 .footer {
-  position: fixed;
+  position:fixed;
   bottom: 0;
   width: 100%;
  
