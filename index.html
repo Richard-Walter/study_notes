@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -15,39 +17,53 @@
 
 
 
-
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark bottom-navbar ">
 
+        <!-- Logo -->
         <a href="#" class="brand-logo px-2">
             <img src="img/logo.png" width="30" height="30">
         </a>
+
+        <!-- Toggle button when screen size is small -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#note1">Section 1</a>
+        <!-- nav link dynamically generated -->
+        <div class="collapse navbar-collapse mx-3" id="navbarNav">
+            <ul class="navbar-nav mr-auto" id="navbarList">
+                <li class="nav-item active noteLink">
+                    <a class="nav-link " href="#note1">Section 1</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#note2">Section 2</a>
+                    <a class="nav-link " href="#note2">Section 2</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#note3">Section 3</a>
+                    <a class="nav-link " href="#note3">Section 3</a>
                 </li>
             </ul>
+
+            <!-- sign in/sign up/ sign out : links dynamically generated -->
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item logged-in d-none">
-                    <a class="nav-link " href="#" class="grey-text" id="logout">Logout</a>
+
+                    <a class="nav-link " href="#" class="grey-text" id="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="mx-1"> log out</span></a>
                 </li>
 
                 <li class="nav-item logged-out">
-                    <a class="nav-link" href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+
+                    <a class="nav-link " href="#" class="grey-text modal-trigger" data-target="modal-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="mx-1"> login</span></a>
                 </li>
                 <li class="nav-item logged-out">
-                    <a class="nav-link" href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+                    <a class="nav-link" href="#" class="grey-text modal-trigger" data-target="modal-signup">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="mx-1"> sign up</span></a>
                 </li>
             </ul>
 
@@ -72,35 +88,119 @@
             <button type="button" class="btn btn-sm btn-success float-right">New Subject</button>
         </div>
 
+
+
+
+
+
         <!-- dynamically generated notes -->
-        <section class="notes my-3 rounded " id="note1">
-            <div class="container-fluid">
-                <h2>Section 1</h2>
-                <p>Click on the different Section links in the navbar to see the smooth scrolling effect.</p>
-            </div>
+        <section class="notes py-1 my-2 rounded container-fluid" id="note1">
+            <header class="text-center text-light border-bottom border-light  ">
+                <i class="note-add far fa-plus-square fa-lg float-left p-1"></i>
+                <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <h5 class="d-inline text-center text-light">Java</h5>
+                </a>
+
+                <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
+            </header>
+
+            <ul class="todos list-group my-3 mx-auto text-dark " id="collapse1">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>play mariokart</span>
+                    <i class="far fa-trash-alt note-delete"></i>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>defeat ganon in zelda</span>
+                    <i class="far fa-trash-alt note-delete"></i>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>make a veggie pie</span>
+                    <i class="far fa-trash-alt note-delete"></i>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>make a veggie pie</span>
+                    <i class="far fa-trash-alt note-delete"></i>
+                </li>
+            </ul>
+
+
         </section>
 
-        <section class="notes my-3 rounded " id="note2">
-            <div class="container-fluid">
-                <h1>Section 2</h1>
-                <p>Click on the different Section links in the navbar to see the smooth scrolling effect.</p>
-            </div>
-        </section>
+        <section class="notes py-1 my-2 rounded container-fluid" id="note2">
+                <header class="text-center text-light border-bottom border-light  ">
+                    <i class="note-add far fa-plus-square fa-lg float-left p-1"></i>
+                    <a class="badge" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <h5 class="d-inline text-center text-light">Java</h5>
+                    </a>
+    
+                    <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
+                </header>
+    
+                <ul class="todos list-group  my-3 mx-auto text-dark " id="collapse2">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>play mariokart</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>defeat ganon in zelda</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>make a veggie pie</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>make a veggie pie</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                </ul>
+    
+    
+            </section>
 
-        <section class="notes my-3 rounded" id="note3">
-            <div class="container-fluid">
-                <h1>Section 3</h1>
-                <p>Click on the different Section links in the navbar to see the smooth scrolling effect.</p>
-            </div>
-        </section>
+            <section class="notes py-1 my-2 rounded container-fluid" id="note3">
+                    <header class="text-center text-light border-bottom border-light  ">
+                        <i class="note-add far fa-plus-square fa-lg float-left p-1"></i>
+                        <a class="badge" data-toggle="collapse" href="#collapse3" role="button" aria-expanded="false"
+                            aria-controls="collapseExample">
+                            <h5 class="d-inline text-center text-light">Java</h5>
+                        </a>
+        
+                        <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
+                    </header>
+        
+                    <ul class="todos list-group collapse my-3 mx-auto text-dark " id="collapse3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>play mariokart</span>
+                            <i class="far fa-trash-alt note-delete"></i>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>defeat ganon in zelda</span>
+                            <i class="far fa-trash-alt note-delete"></i>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>make a veggie pie</span>
+                            <i class="far fa-trash-alt note-delete"></i>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>make a veggie pie</span>
+                            <i class="far fa-trash-alt note-delete"></i>
+                        </li>
+                    </ul>
+        
+        
+                </section>
 
     </div>
 
     <!-- Footer -->
-    <footer id="sticky-footer" class="py-4 mt-4 bg-dark text-white-50">
+    <footer  class="footer py-2 mt-3 bg-dark text-white-50">
         <div class="container text-center">
-            <small>Copyright &copy; <a class="nav-link d-inline text-white" href="https://github.com/Richard-Walter">Richard Walter</a> </small>
-    
+            <small>Copyright &copy; <a class="nav-link d-inline text-white"
+                    href="https://github.com/Richard-Walter">Richard Walter</a> </small>
+
         </div>
     </footer>
     <!-- Footer -->

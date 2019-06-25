@@ -8,19 +8,32 @@ body {
 }
 
 
- /* .topnavbar {
-  background-color: #ff9800;
-  color: #fff
-}  */
-
-/* .title {
-
-  background-color: #ff9800; 
+/* input[type=text],
+input[type=text]:focus{
+  color: #fff;
+  border: none;
+  background: rgba(0,0,0,0.2);
+  max-width: 400px;
 } */
 
-#note1 {padding-top:10px;height:500px;color: #fff; background-color: #1E88E5;}
-#note2 {padding-top:10px;height:500px;color: #fff; background-color: #673ab7;}
-#note3 {padding-top:10px;height:500px;color: #fff; background-color: #ff9800;}
+/* .todos li{
+  background: #f0f1eefb;
+} */
+
+.subject-delete, .note-add, .note-delete {
+  cursor: pointer;
+}
+
+#note1 { background: #1E88E5;}
+#note2 {background: #673ab7;}
+#note3 {background: #ff9800;}
 
 
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+ 
+
+}
