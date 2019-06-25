@@ -5,6 +5,7 @@ html {
 body {
     position: relative; 
     padding-top: 0px;
+    background-color: whitesmoke
 }
 
 
@@ -20,15 +21,23 @@ input[type=text]:focus{
   background: #f0f1eefb;
 } */
 
-.subject-delete, .note-add, .note-delete {
+.title, .login-signup {
+  background: #fff;
+}
+
+.subject-delete, .note-add, .note-pin,.note-delete, .note-remove, .color-picker {
   cursor: pointer;
 }
 
+#pinnedNote { background: hsl(24, 76%, 45%);}
 #note1 { background: #1E88E5;}
 #note2 {background: #673ab7;}
 #note3 {background: #ff9800;}
+#blank {height: 40px}
 
-
+/* input:placeholder-shown {
+  font-size: 75%;
+} */
 
 .footer {
   position: fixed;
