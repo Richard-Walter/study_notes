@@ -4,29 +4,23 @@ html {
 
 body {
     position: relative; 
+    padding-top: 0px;
 }
 
-#section1 {padding-top:50px;height:500px;color: #fff; background-color: #1E88E5;}
-#section2 {padding-top:50px;height:500px;color: #fff; background-color: #673ab7;}
-#section3 {padding-top:50px;height:500px;color: #fff; background-color: #ff9800;}
-#section41 {padding-top:50px;height:500px;color: #fff; background-color: #00bcd4;}
-#section42 {padding-top:50px;height:500px;color: #fff; background-color: #009688;}
+
+ /* .topnavbar {
+  background-color: #ff9800;
+  color: #fff
+}  */
+
+/* .title {
+
+  background-color: #ff9800; 
+} */
+
+#note1 {padding-top:10px;height:500px;color: #fff; background-color: #1E88E5;}
+#note2 {padding-top:10px;height:500px;color: #fff; background-color: #673ab7;}
+#note3 {padding-top:10px;height:500px;color: #fff; background-color: #ff9800;}
 
 
-#div1 {
-    padding-top: 56px;
-    height: 100vh;
-    background-color: lightblue;
-  }
-  
-  #div2 {
-    padding-top: 56px;
-    height: 100vh;
-    background-color: blue;
-  }
-  
-  #div3 {
-    padding-top: 56px;
-    height: 100vh;
-    background-color: red;
-  }
+
