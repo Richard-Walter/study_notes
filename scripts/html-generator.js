@@ -24,13 +24,14 @@ const generatePinnedNoteTemplate = (note) => {
 </li>
     `;
     pinned_note_list.innerHTML += html
-    
+
 }
+
 const generateSubjectTemplate = (subject) => {
 
     const html = `
 
-    <section class="py-1 my-4 rounded container-fluid" id="note3">
+    <section class="py-1 my-4 rounded container-fluid" id="${subject}">
     <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
         <i class="color-picker fas fa-palette fa-lg float-left p-1"></i>
         <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
@@ -50,7 +51,20 @@ const generateSubjectTemplate = (subject) => {
     </div>
 </section>
     `;
-    
+
     gen_notes_list.innerHTML += html
-    
+
+}
+
+
+const generateNavbarTemplate = (subject) => {
+
+    const html = `
+
+    <li class="nav-item noteLink">
+    <a class="nav-link " href="#${subject}">${subject}</a>
+    </li>
+    `;
+    navbar_List.innerHTML += html
+
 }

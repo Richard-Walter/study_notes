@@ -16,7 +16,10 @@ const add_note_form = document.querySelector('.add-note')
 console.log(note_list);
 
 //generated notes list
-const  gen_notes_list = document.querySelector('.generated-notes')
+const gen_notes_list = document.querySelector('.generated-notes')
+
+//nav bar list
+const navbar_List = document.querySelector('#navbarList')
 
 //Add new subject button listener
 new_subject_form.addEventListener('submit', e => {
@@ -24,7 +27,8 @@ new_subject_form.addEventListener('submit', e => {
     e.preventDefault();
 
     const subject = new_subject_form.add_subject.value.trim();
-    console.log("add new subject: " + subject );
+    console.log("add new subject: " + subject);
+    console.log(e.target);
     createNewSubject(subject)
     new_subject_form.reset();
 
@@ -33,14 +37,15 @@ new_subject_form.addEventListener('submit', e => {
 //Add pinned note listener
 pinned_notes.addEventListener('click', e => {
 
-  
     e.preventDefault();
 
     //pick color
-    if (e.target.classList.contains('color-picker')) {
-        console.log("choose color");
+    if (e.target.classList.contains('my-color-picker')) {
 
-    //remove pinned note
+        console.log(e.target.parentElement.parentElement);
+        pickColor(e.target.parentElement.parentElement);
+
+        //remove pinned note
     } else if (e.target.classList.contains('note-pin')) {
         console.log("deleting pinned note");
 
@@ -53,14 +58,14 @@ pinned_notes.addEventListener('click', e => {
 
 notes.addEventListener('click', e => {
 
-    e.preventDefault(); 
+    e.preventDefault();
 
     //delete note
     if (e.target.classList.contains('note-delete')) {
         console.log(e);
         e.target.parentElement.remove();
 
-    //pin note
+        //pin note
     } else if (e.target.classList.contains('note-pin')) {
 
         const note_text = e.target.parentElement.querySelector('.note-text').innerText
@@ -68,17 +73,17 @@ notes.addEventListener('click', e => {
 
         generatePinnedNoteTemplate(note_text)
 
-    //change color
+        //change color
     } else if (e.target.classList.contains('color-picker')) {
 
         console.log(e);
         console.log("pick general note color");
 
-    //delete subject
+        //delete subject
     } else if (e.target.classList.contains('subject-delete')) {
 
         console.log("subject delete");
-        e.target.parentElement.parentElement.remove()     
+        e.target.parentElement.parentElement.remove()
     }
 })
 
@@ -86,7 +91,7 @@ notes.addEventListener('click', e => {
 add_note_form.addEventListener('submit', e => {
 
     console.log(e.target)  //click elements classes
-    e.preventDefault(); 
+    e.preventDefault();
 
     const note = add_note_form.add.value.trim();
 
@@ -100,15 +105,49 @@ add_note_form.addEventListener('submit', e => {
 
 const createNewSubject = (subject) => {
 
+
     generateSubjectTemplate(subject)
+
+    //add background color style
+    document.getElementById(subject).style.backgroundColor = "#2ba01c";
+
+    //add subject to nav link and spyscroll
+    generateNavbarTemplate(subject)
+
+    //add note form listener
+    addNoteFormListener(document.getElementById(subject))
+
+    //add note general listener
+    addNoteGeneralListener(document.getElementById(subject))
 
 }
 
+//adds a form listener when a new note is created
+const addNoteFormListener = (note) => {
 
+    const form = note.querySelector('.add-note')
 
+    //Form listener - add new note
+    form.addEventListener('submit', e => {
 
+        e.preventDefault();
+        
+        console.log(e.target)  //click elements classes
+        
 
+        const note = form.add.value.trim();
 
+        if (note.length) {
+            generateNoteTemplate(note)
+            form.reset();
+        }
 
+    })
+}
 
+//adds a general note listener when a new note is created
+const addNoteGeneralListener = (note) => {
+
+// todo
+}
 

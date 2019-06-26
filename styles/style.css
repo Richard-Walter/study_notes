@@ -25,7 +25,7 @@ input[type=text]:focus{
   background: #e2bd18;
 }
 
-.subject-delete, .note-add, .note-pin,.note-delete, .note-remove, .color-picker {
+.subject-delete, .note-add, .note-pin,.note-delete, .note-remove, .my-color-picker {
   cursor: pointer;
 }
 
@@ -38,7 +38,7 @@ input[type=text]:focus{
 #pinnedNotes { background: hsl(24, 76%, 45%);}
 #note1 { background: #1E88E5;}
 #note2 {background: #673ab7;}
-#note3 {background: #673ab7;}
+#note3 {background: #2ba01c;}
 
 
 /* input:placeholder-shown {

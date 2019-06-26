@@ -9,7 +9,8 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
+
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="120">
@@ -88,7 +89,7 @@
         <!-- Pinned Important Notes -->
         <section class="py-1 my-2 rounded container-fluid" id="pinnedNotes">
             <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
-                <i class="color-picker fas fa-palette fa-lg float-left p-1"></i>
+                <i class="my-color-picker fas fa-palette fa-lg float-left p-1"></i>
                 <a class="badge" data-toggle="collapse" href="#collapse-pinned" role="button" aria-expanded="false"
                     aria-controls="collapse-pinned">
                     <h5 class="d-inline text-center text-light">Pinned Notes</h5>
@@ -100,15 +101,15 @@
                 <ul class="pinned-notes list-group  mb-2 mx-auto text-dark small ">
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class=" note-text mx-2">TODO: done 1</span>
-                    </li>
-                    <li class="list-group-item d-inline justify-content-between align-items-center">
-                        <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="note-text mx-2">TODO: add subject</span>
+                        <span class=" note-text mx-2">TODO: test functionality when adding new subject</span>
                     </li>
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
                         <span class="note-text mx-2">TODO: add color picker logic</span>
+                    </li>
+                    <li class="list-group-item d-inline justify-content-between align-items-center">
+                        <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
+                        <span class="note-text mx-2">TODO: build color picker</span>
                     </li>
                 </ul>
 
@@ -120,7 +121,7 @@
             
             <section class="py-1 my-4 rounded container-fluid" id="note1">
                 <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
-                    <i class="color-picker fas fa-palette fa-lg float-left p-1"></i>
+                    <i class="my-color-picker fas fa-palette fa-lg float-left p-1"></i>
                     <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
                         aria-controls="collapseExample">
                         <h5 class="d-inline text-center text-light">Java</h5>
@@ -209,6 +210,8 @@
 
     <script src="scripts/index.js"></script>
     <script src="scripts/html-generator.js"></script>
+    <script src="scripts/color-picker.js"></script>
+
 </body>
 
 </html>
