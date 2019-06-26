@@ -7,13 +7,26 @@
 //   });
 // }
 
-const pickColor = (elem) => {
 
-    console.log("in pickColor method");
 
-    console.log(elem);
 
-    // elem.style.backgroundColor = '#FF0000'
+const pickColor = (target) => {
+
+
+    console.log("in pick color method");
+    console.log(target)
+
+    var picker = new Picker(target)
+    picker.setColor('#673ab7', true)
+
+    picker.onDone = function (color) {
+
+        target.parentElement.parentElement.style.background = color.rgbaString;
+    };
+
+    //Open the popup manually:
+    picker.openHandler();
+   
 
 
 }

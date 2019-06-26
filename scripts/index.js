@@ -84,8 +84,7 @@ const addNoteListener = (section) => {
             //change color    
         } else if (e.target.classList.contains('my-color-picker')) {
 
-            console.log(e);
-            console.log("pick general note color");
+            pickColor(e.target)
 
             //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
@@ -120,8 +119,7 @@ const addPinnedNotesListener = () => {
         //pick color
         if (e.target.classList.contains('my-color-picker')) {
 
-            console.log(e.target.parentElement.parentElement);
-            pickColor(e.target.parentElement.parentElement);
+            pickColor(e.target);
 
             //remove pinned note
         } else if (e.target.classList.contains('note-pinned')) {
@@ -134,6 +132,7 @@ const addPinnedNotesListener = () => {
 }
 
 addPinnedNotesListener();
+
 
 //   TEST
 //Form listener - add new note  DELETE THESE AFTER
