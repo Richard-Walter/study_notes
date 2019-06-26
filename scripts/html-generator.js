@@ -19,7 +19,7 @@ const generatePinnedNoteTemplate = (note) => {
     const html = `
 
     <li class="list-group-item d-inline justify-content-between align-items-center">
-    <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
+    <i class="fas fa-thumbtack note-pinned float-left pt-1"></i>
     <span class="note-text mx-2">${note}</span>
 </li>
     `;

@@ -36,7 +36,7 @@ const createNewSubject = (subject) => {
 //adds a form listener when a new subject is created
 const addNoteListener = (section) => {
 
- 
+
     const note_list = section.querySelector('.notes')
     const form = section.querySelector('.add-note')
 
@@ -62,12 +62,12 @@ const addNoteListener = (section) => {
 
         e.preventDefault();
 
-        //delete note
+            //delete note
         if (e.target.classList.contains('note-delete')) {
             console.log(e);
             e.target.parentElement.remove();
 
-            //pin note
+            //pin note to pinned list
         } else if (e.target.classList.contains('note-pin')) {
 
             const note_text = e.target.parentElement.querySelector('.note-text').innerText
@@ -75,8 +75,14 @@ const addNoteListener = (section) => {
 
             generatePinnedNoteTemplate(note_text)
 
-            //change color
-        } else if (e.target.classList.contains('color-picker')) {
+            //remove pin from pinned ist
+        } else if (e.target.classList.contains('note-pinned')) {
+            console.log("deleting pinned note");
+
+            e.target.parentElement.remove();
+
+            //change color    
+        } else if (e.target.classList.contains('my-color-picker')) {
 
             console.log(e);
             console.log("pick general note color");
@@ -118,7 +124,7 @@ const addPinnedNotesListener = () => {
             pickColor(e.target.parentElement.parentElement);
 
             //remove pinned note
-        } else if (e.target.classList.contains('note-pin')) {
+        } else if (e.target.classList.contains('note-pinned')) {
             console.log("deleting pinned note");
 
             e.target.parentElement.remove();
