@@ -1,4 +1,4 @@
-const generateNoteTemplate = (note) => {
+const generateNoteTemplate = (note, note_list) => {
 
     console.log("generate note template");
 
@@ -33,7 +33,7 @@ const generateSubjectTemplate = (subject) => {
 
     <section class="py-1 my-4 rounded container-fluid" id="${subject}">
     <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
-        <i class="color-picker fas fa-palette fa-lg float-left p-1"></i>
+        <i class="my-color-picker fas fa-palette fa-lg float-left p-1"></i>
         <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
             aria-controls="collapseExample">
             <h5 class="d-inline text-center text-light">${subject}</h5>

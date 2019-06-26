@@ -11,97 +11,11 @@ console.log(pinned_note_list);
 
 //General note lists
 const notes = document.querySelector('#note1')
-const note_list = notes.querySelector('.notes')
 const add_note_form = document.querySelector('.add-note')
-console.log(note_list);
-
-//generated notes list
 const gen_notes_list = document.querySelector('.generated-notes')
 
 //nav bar list
 const navbar_List = document.querySelector('#navbarList')
-
-//Add new subject button listener
-new_subject_form.addEventListener('submit', e => {
-
-    e.preventDefault();
-
-    const subject = new_subject_form.add_subject.value.trim();
-    console.log("add new subject: " + subject);
-    console.log(e.target);
-    createNewSubject(subject)
-    new_subject_form.reset();
-
-})
-
-//Add pinned note listener
-pinned_notes.addEventListener('click', e => {
-
-    e.preventDefault();
-
-    //pick color
-    if (e.target.classList.contains('my-color-picker')) {
-
-        console.log(e.target.parentElement.parentElement);
-        pickColor(e.target.parentElement.parentElement);
-
-        //remove pinned note
-    } else if (e.target.classList.contains('note-pin')) {
-        console.log("deleting pinned note");
-
-        e.target.parentElement.remove();
-    }
-
-})
-
-//Add general note listener
-
-notes.addEventListener('click', e => {
-
-    e.preventDefault();
-
-    //delete note
-    if (e.target.classList.contains('note-delete')) {
-        console.log(e);
-        e.target.parentElement.remove();
-
-        //pin note
-    } else if (e.target.classList.contains('note-pin')) {
-
-        const note_text = e.target.parentElement.querySelector('.note-text').innerText
-        console.log(note_text);
-
-        generatePinnedNoteTemplate(note_text)
-
-        //change color
-    } else if (e.target.classList.contains('color-picker')) {
-
-        console.log(e);
-        console.log("pick general note color");
-
-        //delete subject
-    } else if (e.target.classList.contains('subject-delete')) {
-
-        console.log("subject delete");
-        e.target.parentElement.parentElement.remove()
-    }
-})
-
-//Form listener - add new note
-add_note_form.addEventListener('submit', e => {
-
-    console.log(e.target)  //click elements classes
-    e.preventDefault();
-
-    const note = add_note_form.add.value.trim();
-
-    if (note.length) {
-        generateNoteTemplate(note)
-        add_note_form.reset();
-    }
-
-});
-
 
 const createNewSubject = (subject) => {
 
@@ -114,40 +28,108 @@ const createNewSubject = (subject) => {
     //add subject to nav link and spyscroll
     generateNavbarTemplate(subject)
 
-    //add note form listener
-    addNoteFormListener(document.getElementById(subject))
-
     //add note general listener
-    addNoteGeneralListener(document.getElementById(subject))
+    addNoteListener(document.getElementById(subject))
 
 }
 
-//adds a form listener when a new note is created
-const addNoteFormListener = (note) => {
+//adds a form listener when a new subject is created
+const addNoteListener = (section) => {
 
-    const form = note.querySelector('.add-note')
+ 
+    const note_list = section.querySelector('.notes')
+    const form = section.querySelector('.add-note')
 
     //Form listener - add new note
     form.addEventListener('submit', e => {
 
         e.preventDefault();
-        
+
         console.log(e.target)  //click elements classes
-        
+
 
         const note = form.add.value.trim();
 
         if (note.length) {
-            generateNoteTemplate(note)
+            generateNoteTemplate(note, note_list)
             form.reset();
+        }
+
+    })
+
+    //Add general note listener
+    section.addEventListener('click', e => {
+
+        e.preventDefault();
+
+        //delete note
+        if (e.target.classList.contains('note-delete')) {
+            console.log(e);
+            e.target.parentElement.remove();
+
+            //pin note
+        } else if (e.target.classList.contains('note-pin')) {
+
+            const note_text = e.target.parentElement.querySelector('.note-text').innerText
+            console.log(note_text);
+
+            generatePinnedNoteTemplate(note_text)
+
+            //change color
+        } else if (e.target.classList.contains('color-picker')) {
+
+            console.log(e);
+            console.log("pick general note color");
+
+            //delete subject
+        } else if (e.target.classList.contains('subject-delete')) {
+
+            console.log("subject delete");
+            e.target.parentElement.parentElement.remove()
+        }
+    })
+
+}
+
+//Add new subject button listener on title form
+new_subject_form.addEventListener('submit', e => {
+
+    e.preventDefault();
+
+    const subject = new_subject_form.add_subject.value.trim();
+    console.log("add new subject: " + subject);
+    console.log(e.target);
+    createNewSubject(subject)
+    new_subject_form.reset();
+
+})
+
+const addPinnedNotesListener = () => {
+
+    //Add pinned note listener
+    pinned_notes.addEventListener('click', e => {
+
+        e.preventDefault();
+
+        //pick color
+        if (e.target.classList.contains('my-color-picker')) {
+
+            console.log(e.target.parentElement.parentElement);
+            pickColor(e.target.parentElement.parentElement);
+
+            //remove pinned note
+        } else if (e.target.classList.contains('note-pin')) {
+            console.log("deleting pinned note");
+
+            e.target.parentElement.remove();
         }
 
     })
 }
 
-//adds a general note listener when a new note is created
-const addNoteGeneralListener = (note) => {
+addPinnedNotesListener();
 
-// todo
-}
+//   TEST
+//Form listener - add new note  DELETE THESE AFTER
+// addNoteListener(document.getElementById('note1'))
 
