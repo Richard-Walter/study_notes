@@ -22,26 +22,38 @@ input[type=text]:focus{
 } */
 
 .title, .login-signup {
-  background: #fff;
+  background: #e2bd18;
 }
 
 .subject-delete, .note-add, .note-pin,.note-delete, .note-remove, .color-picker {
   cursor: pointer;
 }
 
+.form-add-subject {
+  padding-top: 20px;
+  /* padding-left: 200px;
+  padding-right: 200px; */
+}
+
 #pinnedNotes { background: hsl(24, 76%, 45%);}
 #note1 { background: #1E88E5;}
 #note2 {background: #673ab7;}
+#note3 {background: #673ab7;}
 
 
 /* input:placeholder-shown {
   font-size: 75%;
 } */
 
+
+.blank {
+  height: 30px;
+
+}
 .footer {
   position:fixed;
   bottom: 0;
   width: 100%;
+  margin-top: 50px;
  
-
 }

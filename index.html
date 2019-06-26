@@ -31,15 +31,16 @@
         <!-- nav link dynamically generated -->
         <div class="collapse navbar-collapse mx-3" id="navbarNav">
             <ul class="navbar-nav mr-auto" id="navbarList">
-                <li class="nav-item active noteLink">
-                    <a class="nav-link " href="#note1">Section 1</a>
+                <li class="nav-item noteLink">
+                    <a class="nav-link " href="#pinnedNotes">Pinned Notes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="#note2">Section 2</a>
+                <li class="nav-item noteLink">
+                    <a class="nav-link " href="#note1">Note 1</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="#note3">Section 3</a>
+                <li class="nav-item noteLink">
+                    <a class="nav-link " href="#note2">Note 2</a>
                 </li>
+
             </ul>
 
             <!-- sign in/sign up/ sign out : links dynamically generated -->
@@ -71,15 +72,18 @@
 
         <!-- Login/signup -->
         <div class="login-signup p-4 my-3 text-center border rounded " id="login-signup">
-            <h4 class="d-inline text-muted font-weight-normal">Please login or signup to view notes</h4>
+            <h4 class="d-inline text-light font-weight-normal">Please login or signup to view notes</h4>
         </div>
 
         <!-- title -->
-        <div class="title p-4 my-3 text-center border rounded " id="title">
-            <h4 class="d-inline text-muted font-weight-normal">Richard's Study Notes</h4>
-            <!-- <button class="btn-sm btn-success d-inline float-right ml-auto  " type="button" id="new-subject" >New Subject</button> -->
-            <button type="button" class="btn btn-sm btn-success float-right">New Subject</button>
+        <div class="title pt-4 px-3 mt-3 text-center  border rounded" id="title">
+            <h4 class="d-inline text-light font-weight-normal ">Richard's Study Notes</h4>
+            <form class="form-add-subject text-center form-group   ">
+                <input class="form-control m-auto d-flex form-control-sm" placeholder="  create new subject ..."
+                    type="text" name="add_subject" />
+            </form>
         </div>
+
 
         <!-- Pinned Important Notes -->
         <section class="py-1 my-2 rounded container-fluid" id="pinnedNotes">
@@ -96,15 +100,15 @@
                 <ul class="pinned-notes list-group  mb-2 mx-auto text-dark small ">
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="mx-2">TODO: add and delete pinned notes</span>
+                        <span class=" note-text mx-2">TODO: done 1</span>
                     </li>
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="mx-2">TODO: add subject</span>
+                        <span class="note-text mx-2">TODO: add subject</span>
                     </li>
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="mx-2">TODO: add color picker logic</span>
+                        <span class="note-text mx-2">TODO: add color picker logic</span>
                     </li>
                 </ul>
 
@@ -112,76 +116,78 @@
         </section>
 
         <!-- dynamically generated notes -->
-        <section class="py-1 my-4 rounded container-fluid" id="note1">
-            <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
-                <i class="color-picker fas fa-palette fa-lg float-left p-1"></i>
-                <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
-                    aria-controls="collapseExample">
-                    <h5 class="d-inline text-center text-light">Java</h5>
-                </a>
-                <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
-            </header>
-            <div id="collapse1">
-                <ul class="notes list-group mb-2 mx-auto text-dark small ">
-                    <li class="list-group-item d-inline justify-content-between align-items-center">
-                        <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="mx-2">java is really cool</span>
-                        <i class="far fa-trash-alt note-delete float-right pt-1"></i>
-                    </li>
-                    <li class="list-group-item d-inline justify-content-between align-items-center">
-                        <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="mx-2">Java can run on multiple platforms</span>
-                        <i class="far fa-trash-alt note-delete float-right pt-1"></i>
-                    </li>
-                    <li class="list-group-item d-inline justify-content-between align-items-center">
-                        <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
-                        <span class="mx-2">Java requires a compiler before running</span>
-                        <i class="far fa-trash-alt note-delete float-right pt-1"></i>
-                    </li>
+        <div class="generated-notes">
+            
+            <section class="py-1 my-4 rounded container-fluid" id="note1">
+                <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
+                    <i class="color-picker fas fa-palette fa-lg float-left p-1"></i>
+                    <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <h5 class="d-inline text-center text-light">Java</h5>
+                    </a>
+                    <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
+                </header>
+                <div id="collapse1">
+                    <ul class="notes list-group mb-2 mx-auto text-dark small ">
+                        <li class="list-group-item d-inline justify-content-between align-items-center">
+                            <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
+                            <span class="note-text mx-2">java is really cool</span>
+                            <i class="far fa-trash-alt note-delete float-right pt-1"></i>
+                        </li>
+                        <li class="list-group-item d-inline justify-content-between align-items-center">
+                            <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
+                            <span class="note-text mx-2">Java can run on multiple platforms</span>
+                            <i class="far fa-trash-alt note-delete float-right pt-1"></i>
+                        </li>
+                        <li class="list-group-item d-inline justify-content-between align-items-center">
+                            <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
+                            <span class="note-text mx-2">Java requires a compiler before running</span>
+                            <i class="far fa-trash-alt note-delete float-right pt-1"></i>
+                        </li>
 
+                    </ul>
+                    <form class="add-note text-center form-group pt-1  ">
+                        <input class="form-control m-auto d-flex form-control-sm" placeholder="  add new note ..."
+                            type="text" name="add" />
+                    </form>
+                </div>
+            </section>
+
+            <section class="notes py-1 my-2 rounded container-fluid" id="note2">
+                <header class="subject-header text-center text-light border-bottom border-light  ">
+                    <i class="note-add far fa-plus-square fa-lg float-left p-1"></i>
+                    <a class="badge" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        <h5 class="d-inline text-center text-light">Bootstrap</h5>
+                    </a>
+
+                    <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
+                </header>
+
+                <ul class="todos list-group  my-3 mx-auto text-dark " id="collapse2">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>play mariokart</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>defeat ganon in zelda</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>make a veggie pie</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>make a veggie pie</span>
+                        <i class="far fa-trash-alt note-delete"></i>
+                    </li>
                 </ul>
-                <form class="add-note text-center form-group pt-1  ">
-
-                    <input class="form-control m-auto d-flex form-control-sm" placeholder="  add new note ..." type="text" name="add" />
-
-                </form>
-            </div>
-        </section>
-
-        <section class="notes py-1 my-2 rounded container-fluid" id="note2">
-            <header class="subject-header text-center text-light border-bottom border-light  ">
-                <i class="note-add far fa-plus-square fa-lg float-left p-1"></i>
-                <a class="badge" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false"
-                    aria-controls="collapseExample">
-                    <h5 class="d-inline text-center text-light">Bootstrap</h5>
-                </a>
-
-                <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
-            </header>
-
-            <ul class="todos list-group  my-3 mx-auto text-dark " id="collapse2">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>play mariokart</span>
-                    <i class="far fa-trash-alt note-delete"></i>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>defeat ganon in zelda</span>
-                    <i class="far fa-trash-alt note-delete"></i>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>make a veggie pie</span>
-                    <i class="far fa-trash-alt note-delete"></i>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>make a veggie pie</span>
-                    <i class="far fa-trash-alt note-delete"></i>
-                </li>
-            </ul>
-            <section>
+                <section>
+        </div>
     </div>
-
+    <p class = "blank"></p>
     <!-- Footer -->
-    <footer class="footer py-2 mt-2 bg-dark text-white-50">
+    <footer class="footer py-2 bg-dark text-white-50">
         <div class="container text-center">
             <small>Copyright &copy; <a class="nav-link d-inline text-white"
                     href="https://github.com/Richard-Walter">Richard Walter</a> </small>

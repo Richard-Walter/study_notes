@@ -1,5 +1,7 @@
 const colorArray = ['#1E88E5', '#673ab7', '#FF33FF', '#FFFF99'];
 
+//new subject listener
+const new_subject_form = document.querySelector('.form-add-subject')
 
 //pinned note list
 const pinned_notes = document.querySelector('#pinnedNotes')
@@ -11,21 +13,38 @@ console.log(pinned_note_list);
 const notes = document.querySelector('#note1')
 const note_list = notes.querySelector('.notes')
 const add_note_form = document.querySelector('.add-note')
-
 console.log(note_list);
+
+//generated notes list
+const  gen_notes_list = document.querySelector('.generated-notes')
+
+//Add new subject button listener
+new_subject_form.addEventListener('submit', e => {
+
+    e.preventDefault();
+
+    const subject = new_subject_form.add_subject.value.trim();
+    console.log("add new subject: " + subject );
+    createNewSubject(subject)
+    new_subject_form.reset();
+
+})
 
 //Add pinned note listener
 pinned_notes.addEventListener('click', e => {
 
-    console.log("pinned event");
-    e.preventDefault(); //prevent page from reloading
+  
+    e.preventDefault();
 
     //pick color
     if (e.target.classList.contains('color-picker')) {
         console.log("choose color");
 
+    //remove pinned note
     } else if (e.target.classList.contains('note-pin')) {
-        console.log("delete pinned note");
+        console.log("deleting pinned note");
+
+        e.target.parentElement.remove();
     }
 
 })
@@ -34,26 +53,32 @@ pinned_notes.addEventListener('click', e => {
 
 notes.addEventListener('click', e => {
 
-    e.preventDefault(); //prevent page from reloading
+    e.preventDefault(); 
 
     //delete note
     if (e.target.classList.contains('note-delete')) {
         console.log(e);
         e.target.parentElement.remove();
 
-        //pin note
+    //pin note
     } else if (e.target.classList.contains('note-pin')) {
 
-        console.log(e);
-        console.log("noted pinned");
+        const note_text = e.target.parentElement.querySelector('.note-text').innerText
+        console.log(note_text);
 
-        generatePinnedNoteTemplate("test pinned")
+        generatePinnedNoteTemplate(note_text)
+
+    //change color
     } else if (e.target.classList.contains('color-picker')) {
 
         console.log(e);
         console.log("pick general note color");
 
-        generatePinnedNoteTemplate("test pinned");
+    //delete subject
+    } else if (e.target.classList.contains('subject-delete')) {
+
+        console.log("subject delete");
+        e.target.parentElement.parentElement.remove()     
     }
 })
 
@@ -61,7 +86,7 @@ notes.addEventListener('click', e => {
 add_note_form.addEventListener('submit', e => {
 
     console.log(e.target)  //click elements classes
-    e.preventDefault(); //prevent page from reloading
+    e.preventDefault(); 
 
     const note = add_note_form.add.value.trim();
 
@@ -73,7 +98,11 @@ add_note_form.addEventListener('submit', e => {
 });
 
 
+const createNewSubject = (subject) => {
 
+    generateSubjectTemplate(subject)
+
+}
 
 
 
