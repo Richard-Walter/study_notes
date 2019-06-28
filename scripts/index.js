@@ -7,8 +7,6 @@ const new_subject_form = document.querySelector('.form-add-subject')
 const pinned_notes = document.querySelector('#pinnedNotes')
 const pinned_note_list = pinned_notes.querySelector('.pinned-notes')
 
-console.log(pinned_note_list);
-
 //General note lists
 const notes = document.querySelector('#note1')
 const add_note_form = document.querySelector('.add-note')
@@ -17,8 +15,9 @@ const gen_notes_list = document.querySelector('.generated-notes')
 //nav bar list
 const navbar_List = document.querySelector('#navbarList')
 
-const createNewSubject = (subject) => {
+console.log("refreshing page");
 
+const createNewSubject = (subject) => {
 
     generateSubjectTemplate(subject)
 
@@ -36,7 +35,6 @@ const createNewSubject = (subject) => {
 //adds a form listener when a new subject is created
 const addNoteListener = (section) => {
 
-
     const note_list = section.querySelector('.notes')
     const form = section.querySelector('.add-note')
 
@@ -46,7 +44,6 @@ const addNoteListener = (section) => {
         e.preventDefault();
 
         console.log(e.target)  //click elements classes
-
 
         const note = form.add.value.trim();
 

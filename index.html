@@ -11,6 +11,8 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/style.css">
 
+
+
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="120">
@@ -101,11 +103,12 @@
                 <ul class="pinned-notes list-group  mb-2 mx-auto text-dark small ">
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pinned float-left pt-1"></i>
-                        <span class="note-text mx-2">TODO: add color picker logic</span>
+                        <span class="note-text mx-2">TODO: bug add 2 subject - write in one, then write in the
+                            other</span>
                     </li>
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pinned float-left pt-1"></i>
-                        <span class="note-text mx-2">TODO: build color picker</span>
+                        <span class="note-text mx-2">TODO: make subject unique check</span>
                     </li>
                 </ul>
 
@@ -114,7 +117,7 @@
 
         <!-- dynamically generated notes -->
         <div class="generated-notes">
-            
+
             <!-- <section class="py-1 my-4 rounded container-fluid" id="note1">
                 <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
                     <i class="my-color-picker fas fa-palette fa-lg float-left p-1"></i>
@@ -152,7 +155,7 @@
 
         </div>
     </div>
-    <p class = "blank"></p>
+    <p class="blank"></p>
     <!-- Footer -->
     <footer class="footer py-2 bg-dark text-white-50">
         <div class="container text-center">
@@ -163,6 +166,36 @@
     </footer>
 
     <!-- Footer -->
+
+
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCf96kjXXNiKjbL4_AiDILrFbWEMz4hI0c",
+            authDomain: "study-notes-12199.firebaseapp.com",
+            databaseURL: "https://study-notes-12199.firebaseio.com",
+            projectId: "study-notes-12199",
+            storageBucket: "study-notes-12199.appspot.com",
+            messagingSenderId: "594061194904",
+            appId: "1:594061194904:web:726d5451e3d95307"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+  
+
+    </script>
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
