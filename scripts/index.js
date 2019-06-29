@@ -246,7 +246,7 @@ const addNoteListener = (section) => {
             //change color    
         } else if (e.target.classList.contains('my-color-picker')) {
 
-            pickColor(e.target, section)
+            pickColor(e.target, id)
 
             //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
@@ -257,14 +257,14 @@ const addNoteListener = (section) => {
             console.log(section);
             db.collection("subjects").doc(id).delete();
 
-            // db.collection('notes').where('subject', '==', section).get().then((snapshot) => {
+            db.collection('notes').where('subject', '==', section).get().then((snapshot) => {
                 
-            //     snapshot.docs.forEach(doc => {
-            //         if (doc.data().subject == section) {
-            //             doc.delete()
-            //         }
-            //     });
-            // })
+                snapshot.docs.forEach(doc => {
+                    if (doc.data().subject == id) {
+                        doc.delete()
+                    }
+                });
+            })
 
 
             e.target.parentElement.parentElement.remove()
@@ -281,7 +281,7 @@ new_subject_form.addEventListener('submit', e => {
     const subject = new_subject_form.add_subject.value.trim();
     console.log("add new subject: " + subject);
     createNewSubject(subject)
-    renderNewSubject(subject)
+
     new_subject_form.reset();
 
 })
