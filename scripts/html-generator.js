@@ -32,11 +32,11 @@ const generatePinnedNoteTemplate = (note) => {
 
 }
 
-const generateSubjectTemplate = (subject) => {
+const generateSubjectTemplate = (bgColor, collapse, subject) => {
 
     const html = `
 
-    <section class="py-1 my-4 rounded container-fluid" style="background:#673ab7" id="${subject}">
+    <section class="py-1 my-4 rounded container-fluid" style="background:${bgColor}" id="${subject}">
     <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
         <i class="my-color-picker fas fa-palette fa-lg float-left p-1"></i>
         <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"
