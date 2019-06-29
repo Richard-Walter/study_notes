@@ -82,11 +82,32 @@
         <div class="title pt-4 px-3 mt-3 mb-4 text-center  border rounded" id="title">
             <h4 class="d-inline text-light font-weight-normal ">Richard's Study Notes</h4>
             <form class="form-add-subject text-center form-group   ">
-                <input class="form-control m-auto d-flex form-control-sm" placeholder="  create new subject ..."
-                    type="text" name="add_subject" />
+                        <!-- add class  'is-invalid' if subject doesnt exist  -->
+                     <input class="form-control m-auto d-flex form-control-sm" id="validateUniqueSubject" placeholder="  create new subject ..."
+                    type="text" name="add_subject"/>
+                <div class="invalid-feedback">
+                    Subject already exists.  Please provide a unique suject name.
+                </div>
             </form>
         </div>
 
+        <!-- Subject already exists alert modal -->
+        <!-- <div class="modal fade " id="subjectExistsModal" tabindex="-1" role="dialog"
+            aria-labelledby="subjectExistsTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="subjectExistsModalCenterTitle">Subject name already exists</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Please enter a unique subject name</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
 
         <!-- Pinned Important Notes -->
         <section class="py-1 my-2 rounded container-fluid" style="background: #c9611b" id="pinnedNotes">
@@ -108,7 +129,7 @@
                     </li>
                     <li class="list-group-item d-inline justify-content-between align-items-center">
                         <i class="fas fa-thumbtack note-pinned float-left pt-1"></i>
-                        <span class="note-text mx-2">TODO: make subject unique check</span>
+                        <span class="note-text mx-2">TODO: check unique subject functionality</span>
                     </li>
                 </ul>
 
@@ -156,7 +177,7 @@
         firebase.initializeApp(firebaseConfig);
 
         const db = firebase.firestore();
-  
+
 
     </script>
 

@@ -13,7 +13,9 @@ const gen_notes_list = document.querySelector('.generated-notes')
 //nav bar list
 const navbar_List = document.querySelector('#navbarList')
 
-//change rule to only do this if doesn't exist
+//subject exists modal
+const subject_exists_modal = document.querySelector('#validateUniqueSubject')
+
 // create pinned notes as a required subject - use set as it doesnt create another doc if exists
 db.collection('subjects').doc("pinned").set({
 
@@ -225,8 +227,8 @@ const addNoteListener = (section) => {
         if (e.target.classList.contains('note-delete')) {
             console.log("deleteing Note");
 
-            
-        
+
+
             e.target.parentElement.remove();
 
             //pin note to pinned list
@@ -258,7 +260,7 @@ const addNoteListener = (section) => {
             db.collection("subjects").doc(id).delete();
 
             db.collection('notes').where('subject', '==', section).get().then((snapshot) => {
-                
+
                 snapshot.docs.forEach(doc => {
                     if (doc.data().subject == id) {
                         doc.delete()
@@ -273,18 +275,47 @@ const addNoteListener = (section) => {
 
 }
 
+
 //Add new subject button listener on title form
 new_subject_form.addEventListener('submit', e => {
 
     e.preventDefault();
 
+    let subject_exists = null;
+
     const subject = new_subject_form.add_subject.value.trim();
-    console.log("add new subject: " + subject);
-    createNewSubject(subject)
+    // console.log("add new subject: " + subject);
+
+    db.collection('subjects').get().then((snapshot) => {
+
+        snapshot.docs.forEach(doc => {
+
+
+            if (doc.id == subject) {
+
+                subject_exists = true;
+                return;
+            }
+        });
+
+        if (subject_exists) {
+
+            subject_exists_modal.classList.add('is-invalid')
+            console.log("this subject is invlaid- displaying error");
+
+        } else {
+
+            console.log("subject doesnt exist....create new one");
+            createNewSubject(subject)
+            subject_exists_modal.classList.remove('is-invalid')
+            subject_exists = false
+        }
+    })
 
     new_subject_form.reset();
-
 })
+
+
 
 const addPinnedNotesListener = () => {
 
@@ -309,9 +340,4 @@ const addPinnedNotesListener = () => {
 }
 
 addPinnedNotesListener();
-
-
-//   TEST
-//Form listener - add new note  DELETE THESE AFTER
-// addNoteListener(document.getElementById('note1'))
 
