@@ -197,6 +197,8 @@ const addNoteListener = (section) => {
 
     const note_list = section.querySelector('.notes')
     const form = section.querySelector('.add-note')
+    const id = section.getAttribute("id")
+    console.log("TEST: " + id);
 
     //Form listener - add new note
     form.addEventListener('submit', e => {
@@ -221,7 +223,10 @@ const addNoteListener = (section) => {
 
         //delete note
         if (e.target.classList.contains('note-delete')) {
-            console.log(e);
+            console.log("deleteing Note");
+
+            
+        
             e.target.parentElement.remove();
 
             //pin note to pinned list
@@ -246,7 +251,22 @@ const addNoteListener = (section) => {
             //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
 
-            console.log("subject delete");
+            console.log("Deleting subject");
+
+            //delete subjects as well as the notes it contains
+            console.log(section);
+            db.collection("subjects").doc(id).delete();
+
+            // db.collection('notes').where('subject', '==', section).get().then((snapshot) => {
+                
+            //     snapshot.docs.forEach(doc => {
+            //         if (doc.data().subject == section) {
+            //             doc.delete()
+            //         }
+            //     });
+            // })
+
+
             e.target.parentElement.parentElement.remove()
         }
     })
