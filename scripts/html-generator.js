@@ -1,6 +1,11 @@
-const generateNoteTemplate = (note, note_list) => {
+const generateNoteTemplate = (note, subject) => {
 
     console.log("generate note template");
+
+    subject = document.getElementById(subject)
+    note_list = subject.querySelector('.notes')
+    console.log(subject);
+    console.log(note_list);
 
     const html = `
 
@@ -31,7 +36,7 @@ const generateSubjectTemplate = (subject) => {
 
     const html = `
 
-    <section class="py-1 my-4 rounded container-fluid" id="${subject}">
+    <section class="py-1 my-4 rounded container-fluid" style="background:#673ab7" id="${subject}">
     <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
         <i class="my-color-picker fas fa-palette fa-lg float-left p-1"></i>
         <a class="badge" data-toggle="collapse" href="#collapse1" role="button" aria-expanded="false"

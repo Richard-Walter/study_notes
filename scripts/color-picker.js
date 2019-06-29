@@ -8,9 +8,7 @@
 // }
 
 
-
-
-const pickColor = (target) => {
+const pickColor = (target, doc_id) => {
 
 
     console.log("in pick color method");
@@ -26,8 +24,12 @@ const pickColor = (target) => {
 
     //Open the popup manually:
     picker.openHandler();
-   
 
+    //update database with color choise
+
+    db.collection("subjects").doc(doc_id).update({
+        bgColor: color.rgbaString
+    });
 
 }
 

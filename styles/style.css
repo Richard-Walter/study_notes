@@ -35,10 +35,7 @@ input[type=text]:focus{
   padding-right: 200px; */
 }
 
-#pinnedNotes { background: hsl(24, 76%, 45%);}
-#note1 { background: #1E88E5;}
-#note2 {background: #673ab7;}
-#note3 {background: #2ba01c;}
+#pinnedNotes { background: #c9611b;}
 
 
 /* input:placeholder-shown {

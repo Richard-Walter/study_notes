@@ -1,5 +1,3 @@
-const colorArray = ['#1E88E5', '#673ab7', '#FF33FF', '#FFFF99'];
-
 //new subject listener
 const new_subject_form = document.querySelector('.form-add-subject')
 
@@ -15,14 +13,128 @@ const gen_notes_list = document.querySelector('.generated-notes')
 //nav bar list
 const navbar_List = document.querySelector('#navbarList')
 
+
+// create pinned notes as a required subject - use set as it doesnt create another doc if exists
+db.collection('subjects').doc("pinned").set({
+
+    bgColor: "#c9611b",
+    collapse: false,
+    created: firebase.firestore.Timestamp.fromDate(new Date()),
+    subject: "pinned"
+});
+
+// setup realtime firebase listener
+
+db.collection('notes').orderBy('created').onSnapshot(snapshot => {
+
+    let changes = snapshot.docChanges();
+    console.log(changes);
+
+    changes.forEach(change => {
+        console.log(change.doc);
+
+        if(change.type == 'added'){
+            renderNotes(change.doc);
+            
+        } else if (change.type == 'removed'){
+
+            // let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
+            // cafeList.removeChild(li);
+            
+        }
+    });
+});
+
+const renderNotes = (doc) => {
+
+    data = doc.data();
+    console.log("rendering note");
+    subject = data.subject;
+    pinned = data.pinned
+    note = data.note
+    id = doc.id
+    console.log(subject);
+    console.log(pinned);
+    console.log(note);
+    console.log(id);
+
+    //check if subject exists, if not create new subject first. 
+    if (!document.getElementById(subject)) {
+        console.log("subject doesnt exisit - CREATING SUBJECT VIEW");
+
+        createNewSubject(subject)
+        
+    }
+
+
+
+    if (subject == "pinnedNotes") {
+        console.log("rendering pinned notes");
+        generatePinnedNoteTemplate(note)
+
+    } else {
+        
+            console.log("test'");
+ 
+        generateNoteTemplate(note, subject)
+    }
+
+}
+
+// //test - get refeerence to pinned collection
+// db.collection('pinned').orderBy('timestamp').get().then((snapshot) => {
+//     console.log(snapshot.docs);
+//     snapshot.docs.forEach(doc => {
+     
+//         console.log(doc.data().note);   //returns note
+//         console.log(doc.data().timestamp);   //returns note
+//         console.log(doc.data().timestamp.seconds);   //returns note
+
+//         console.log(doc.id);   //unique id
+//     });
+// })
+
+// //test - add/saving  to pinned collection
+// db.collection('pinned').add({
+//     note: "note added from javascript",
+//     pinned: false
+// });
+
+// updating records (console demo)
+// db.collection('pinned').doc('DOgwUvtEQbjZohQNIeMr').update({
+//     name: 'mario world'
+// });
+
+//test - delete  to pinned collection
+// db.collection('pinned').doc("aPTDbJFRLIiDg0X1uvkb").delete();
+
+//querying data
+// db.collection('pinned').where('timestamp', '==', '1561688100').get().then((snapshot) => {
+//     console.log(snapshot.docs);
+//     snapshot.docs.forEach(doc => {
+//         console.log("query data:");
+//         console.log(doc.data());   //returns an dictionary array  
+//         console.log(doc.id);   //unique id
+//     });
+// })
+
+// updating records (console demo)
+// db.collection('pinned').doc('DOgwUvtEQbjZohQNIeMr').update({
+//     timestamp: data_submitted
+// });
+
+// db.collection('pinned').doc('DOgwUvtEQbjZohQNIeMr').update({
+//     note: 'lets update the note'
+// });
+
+
+
+
 console.log("refreshing page");
 
 const createNewSubject = (subject) => {
 
     generateSubjectTemplate(subject)
-
-    //add background color style
-    document.getElementById(subject).style.backgroundColor = "#2ba01c";
 
     //add subject to nav link and spyscroll
     generateNavbarTemplate(subject)
@@ -48,7 +160,7 @@ const addNoteListener = (section) => {
         const note = form.add.value.trim();
 
         if (note.length) {
-            generateNoteTemplate(note, note_list)
+            generateNoteTemplate(note, section)
             form.reset();
         }
 
@@ -81,7 +193,7 @@ const addNoteListener = (section) => {
             //change color    
         } else if (e.target.classList.contains('my-color-picker')) {
 
-            pickColor(e.target)
+            pickColor(e.target, doc_id)
 
             //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
@@ -100,7 +212,6 @@ new_subject_form.addEventListener('submit', e => {
 
     const subject = new_subject_form.add_subject.value.trim();
     console.log("add new subject: " + subject);
-    console.log(e.target);
     createNewSubject(subject)
     new_subject_form.reset();
 
@@ -116,7 +227,7 @@ const addPinnedNotesListener = () => {
         //pick color
         if (e.target.classList.contains('my-color-picker')) {
 
-            pickColor(e.target);
+            pickColor(e.target, doc_id);
 
             //remove pinned note
         } else if (e.target.classList.contains('note-pinned')) {
