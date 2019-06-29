@@ -104,7 +104,7 @@ const renderNotes = (doc) => {
     console.log(note);
     console.log(id);
 
-    if (subject == "pinnedNotes") {
+    if (pinned == true) {
         console.log("rendering pinned notes");
         generatePinnedNoteTemplate(note, id)
 
@@ -251,17 +251,20 @@ const addNoteListener = (section) => {
             //pin note to pinned list
         } else if (e.target.classList.contains('note-pin')) {
 
+            const note_id = e.target.parentElement.getAttribute("id")
             const note_text = e.target.parentElement.querySelector('.note-text').innerText
-            console.log(note_text);
 
-            generatePinnedNoteTemplate(note_text)
+            db.collection('notes').doc(note_id).update({
+                pinned: true
+            });
+
+            generatePinnedNoteTemplate(note_text, note_id)
 
             //remove pin from pinned ist
         } else if (e.target.classList.contains('note-pinned')) {
-            console.log("deleting pinned note");
 
+            //this functionality is in the pinned note listener - merge?
 
-            e.target.parentElement.remove();
 
             //change color    
         } else if (e.target.classList.contains('my-color-picker')) {
@@ -335,9 +338,7 @@ new_subject_form.addEventListener('submit', e => {
 })
 
 
-
-
-//Add pinned note listener
+// Add pinned note listener
 pinned_notes.addEventListener('click', e => {
 
     e.preventDefault();
@@ -349,10 +350,19 @@ pinned_notes.addEventListener('click', e => {
 
         //remove pinned note
     } else if (e.target.classList.contains('note-pinned')) {
-        console.log("deleting pinned note");
+
+        const note_id = e.target.parentElement.getAttribute("id")
+
+        console.log("TEST deleting pinned note");
+        console.log("pinned note ID: " + note_id);
+
+        db.collection('notes').doc(note_id).update({
+
+            pinned: false
+        });
+
 
         e.target.parentElement.remove();
     }
-
 })
 
