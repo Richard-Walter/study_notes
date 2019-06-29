@@ -41,6 +41,8 @@ db.collection('subjects').orderBy('created').onSnapshot(snapshot => {
 
         } else if (change.type == 'removed') {
 
+
+
             // let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
             // cafeList.removeChild(li);
 
@@ -63,8 +65,7 @@ db.collection('notes').orderBy('created').onSnapshot(snapshot => {
 
         } else if (change.type == 'removed') {
 
-            // let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
-            // cafeList.removeChild(li);
+            // renderNotes(change.doc);
 
         }
     });
@@ -105,13 +106,13 @@ const renderNotes = (doc) => {
 
     if (subject == "pinnedNotes") {
         console.log("rendering pinned notes");
-        generatePinnedNoteTemplate(note)
+        generatePinnedNoteTemplate(note, id)
 
     } else {
 
         console.log("test'");
 
-        generateNoteTemplate(note, subject)
+        generateNoteTemplate(note, subject, id)
     }
 
 }
@@ -200,20 +201,31 @@ const addNoteListener = (section) => {
     const note_list = section.querySelector('.notes')
     const form = section.querySelector('.add-note')
     const id = section.getAttribute("id")
-    console.log("TEST: " + id);
+
+
 
     //Form listener - add new note
     form.addEventListener('submit', e => {
 
         e.preventDefault();
 
-        console.log(e.target)  //click elements classes
-
         const note = form.add.value.trim();
 
+        console.log("TESTING add note");
+
         if (note.length) {
-            generateNoteTemplate(note, section)
-            form.reset();
+
+            db.collection('notes').add({
+
+                note: note,
+                pinned: false,
+                created: firebase.firestore.Timestamp.fromDate(new Date()),
+                subject: id
+
+            }).then(() => {
+
+                form.reset();
+            });
         }
 
     })
@@ -223,11 +235,16 @@ const addNoteListener = (section) => {
 
         e.preventDefault();
 
+
         //delete note
         if (e.target.classList.contains('note-delete')) {
+
+
             console.log("deleteing Note");
-
-
+            //get document id then do code below
+            const note_id = e.target.parentElement.getAttribute("id")
+            console.log(note_id);
+            db.collection("notes").doc(note_id).delete()
 
             e.target.parentElement.remove();
 
@@ -243,6 +260,7 @@ const addNoteListener = (section) => {
         } else if (e.target.classList.contains('note-pinned')) {
             console.log("deleting pinned note");
 
+
             e.target.parentElement.remove();
 
             //change color    
@@ -257,11 +275,13 @@ const addNoteListener = (section) => {
 
             //delete subjects as well as the notes it contains
             console.log(section);
-            db.collection("subjects").doc(id).delete();
+            db.collection("subjects").doc(id).delete()
+            e.target.parentElement.parentElement.remove(id);
 
-            db.collection('notes').where('subject', '==', section).get().then((snapshot) => {
+            db.collection('notes').where('subject', '==', id).get().then((snapshot) => {
 
                 snapshot.docs.forEach(doc => {
+                    console.log(doc);
                     if (doc.data().subject == id) {
                         doc.delete()
                     }
@@ -269,7 +289,6 @@ const addNoteListener = (section) => {
             })
 
 
-            e.target.parentElement.parentElement.remove()
         }
     })
 
@@ -317,27 +336,23 @@ new_subject_form.addEventListener('submit', e => {
 
 
 
-const addPinnedNotesListener = () => {
 
-    //Add pinned note listener
-    pinned_notes.addEventListener('click', e => {
+//Add pinned note listener
+pinned_notes.addEventListener('click', e => {
 
-        e.preventDefault();
+    e.preventDefault();
 
-        //pick color
-        if (e.target.classList.contains('my-color-picker')) {
+    //pick color
+    if (e.target.classList.contains('my-color-picker')) {
 
-            pickColor(e.target, "pinned");
+        pickColor(e.target, "pinned");
 
-            //remove pinned note
-        } else if (e.target.classList.contains('note-pinned')) {
-            console.log("deleting pinned note");
+        //remove pinned note
+    } else if (e.target.classList.contains('note-pinned')) {
+        console.log("deleting pinned note");
 
-            e.target.parentElement.remove();
-        }
+        e.target.parentElement.remove();
+    }
 
-    })
-}
-
-addPinnedNotesListener();
+})
 
