@@ -2,8 +2,9 @@
 const new_subject_form = document.querySelector('.form-add-subject')
 
 //pinned note list
-const pinned_notes = document.querySelector('#pinnedNotes')
+const pinned_notes = document.getElementById('pinnedNotes')
 const pinned_note_list = pinned_notes.querySelector('.pinned-notes')
+
 
 //General note lists
 const notes = document.querySelector('#note1')
@@ -16,6 +17,8 @@ const navbar_List = document.querySelector('#navbarList')
 //subject exists modal
 const subject_exists_modal = document.querySelector('#validateUniqueSubject')
 
+console.log("refreshing page");
+
 // create pinned notes as a required subject - use set as it doesnt create another doc if exists
 db.collection('subjects').doc("pinned").set({
 
@@ -26,96 +29,88 @@ db.collection('subjects').doc("pinned").set({
 });
 
 
+// render the subjects 
+const renderSubjects = () => {
 
-// setup realtime firebase subject listener
-db.collection('subjects').orderBy('created').onSnapshot(snapshot => {
+    db.collection('subjects').orderBy('created').get().then((snapshot) => {
 
-    let changes = snapshot.docChanges();
-    console.log(changes);
+        docs = snapshot.docs;
+        console.log(docs);
 
-    changes.forEach(change => {
-        console.log(change.doc);
+        docs.forEach(doc => {
 
-        if (change.type == 'added') {
-            renderSubjects(change.doc);
+            data = doc.data()
+            if (data.subject == "pinned") {
 
-        } else if (change.type == 'removed') {
+                //update attributes in case they have changed
+                pinned_notes.style["background"] = data.bgColor
 
-
-
-            // let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
-            // cafeList.removeChild(li);
-
-        }
+            } else {
+                renderNewSubject(data.bgColor, data.collapse, data.subject)
+            }
+        });
     });
-});
 
+}
+
+renderSubjects();
 
 // setup realtime firebase note listener
-db.collection('notes').orderBy('created').onSnapshot(snapshot => {
+// db.collection('notes').orderBy('created').onSnapshot(snapshot => {
 
-    let changes = snapshot.docChanges();
-    console.log(changes);
+//     let changes = snapshot.docChanges();
+//     console.log("CHANGES ARE:");
+//     console.log(changes);
 
-    changes.forEach(change => {
-        console.log(change.doc);
+//     changes.forEach(change => {
+//         console.log(change.doc);
+//         console.log("Change type:  " + change.type);
 
-        if (change.type == 'added') {
-            renderNotes(change.doc);
+//         if (change.type == 'added') {
+//             renderNotes(change.doc);
 
-        } else if (change.type == 'removed') {
+//         } else if (change.type == 'removed') {
 
-            // renderNotes(change.doc);
+//             console.log("HKJHKHHKHKHJ");
+//             //remove from pinned notes if pinned
+//             if (change.doc.data().pinned = true) {
 
-        }
-    });
-});
+//                 // e.target.parentElement.remove();
+//             }
 
-const renderSubjects = (doc) => {
+//         }
+//     });
+// });
 
-    data = doc.data();
-    console.log("rendering subject");
-    console.log(data);
-    bgColor = data.bgColor;
-    collapse = data.collapse;
-    subject = data.subject
+const renderNotes = () => {
 
-    if (subject == "pinned") {
 
-        //update attributes in case they have changed
-        pinned_notes.style["background"] = bgColor
+    db.collection('notes').orderBy('created').get().then((snapshot) => {
 
-    } else {
-        renderNewSubject(bgColor, collapse, subject)
-    }
+        docs = snapshot.docs;
+
+
+        docs.forEach(doc => {
+
+            data = doc.data();
+            subject = data.subject;
+            pinned = data.pinned
+            note = data.note
+            id = doc.id
+
+            console.log("Rendering notes: " + id, subject, note, pinned);
+
+
+            if (pinned == true) {
+                console.log("rendering pinned notes");
+                generatePinnedNoteTemplate(note, id)
+            }
+            generateNoteTemplate(note, subject, id);
+        })
+    })
 }
 
-
-const renderNotes = (doc) => {
-
-    data = doc.data();
-    console.log("rendering note");
-    subject = data.subject;
-    pinned = data.pinned
-    note = data.note
-    id = doc.id
-    console.log(subject);
-    console.log(pinned);
-    console.log(note);
-    console.log(id);
-
-    if (pinned == true) {
-        console.log("rendering pinned notes");
-        generatePinnedNoteTemplate(note, id)
-
-    } else {
-
-        console.log("test'");
-
-        generateNoteTemplate(note, subject, id)
-    }
-
-}
+renderNotes();
 
 // //test - get refeerence to pinned collection
 // db.collection('pinned').orderBy('timestamp').get().then((snapshot) => {
@@ -165,20 +160,22 @@ const renderNotes = (doc) => {
 
 
 
-
-console.log("refreshing page");
-
 const createNewSubject = (subject) => {
 
     //store new subject in firebase    
+
+    bgColor = "#673ab7";
+    collapse = false;
+
     db.collection("subjects").doc(subject).set({
 
-        bgColor: "#673ab7",
-        collapse: false,
+        bgColor: bgColor,
+        collapse: collapse,
         created: firebase.firestore.Timestamp.fromDate(new Date()),
         subject: subject
     });
 
+    renderNewSubject(bgColor, collapse, subject);
 
 }
 
@@ -190,19 +187,24 @@ const renderNewSubject = (bgColor, collapse, subject) => {
     //add subject to nav link and spyscroll
     generateNavbarTemplate(subject)
 
+    console.log("RENDERING NEW SUBJECT:  " + subject + "  _ ATTACHING LISTENER");
+    console.log(document.getElementById(subject));
+
     //add note general listener
-    addNoteListener(document.getElementById(subject))
+    addNoteListener(document.getElementById(subject), subject)
+
 
 }
 
 //adds a form listener when a new subject is created
-const addNoteListener = (section) => {
+const addNoteListener = (section, subject) => {
 
-    const note_list = section.querySelector('.notes')
-    const form = section.querySelector('.add-note')
-    const id = section.getAttribute("id")
+    // const note_list = section.querySelector('.notes')
+    let form = section.querySelector('.add-note')
+    let id = section.getAttribute("id")
 
-
+    console.log("ADDING LISTENER");
+    console.log("ID is " + id);
 
     //Form listener - add new note
     form.addEventListener('submit', e => {
@@ -222,8 +224,10 @@ const addNoteListener = (section) => {
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 subject: id
 
-            }).then(() => {
+            }).then((doc) => {
 
+                //render note 
+                generateNoteTemplate(note, subject, doc.id)
                 form.reset();
             });
         }
@@ -239,34 +243,39 @@ const addNoteListener = (section) => {
         //delete note
         if (e.target.classList.contains('note-delete')) {
 
-
-            console.log("deleteing Note");
             //get document id then do code below
             const note_id = e.target.parentElement.getAttribute("id")
-            console.log(note_id);
-            db.collection("notes").doc(note_id).delete()
+            const docRef = db.collection("notes").doc(note_id)
 
-            e.target.parentElement.remove();
+            //remove first from pinned UI if applicable
+            docRef.get().then(function (doc) {
+
+                if (doc.data().pinned == true) {
+
+                    pinned_note = pinned_notes.querySelector("#" + note_id)
+                    console.log("REMOVING PINNED NOTE: " + pinned_note);
+                    pinned_note.remove()
+                }
+                //then delete delete from firebase
+                docRef.delete()
+                e.target.parentElement.remove();
+            })
+
+
 
             //pin note to pinned list
         } else if (e.target.classList.contains('note-pin')) {
 
             const note_id = e.target.parentElement.getAttribute("id")
             const note_text = e.target.parentElement.querySelector('.note-text').innerText
-
+            console.log("UPDATING NOTE TO INDICATE PINNED: " + note_id);
             db.collection('notes').doc(note_id).update({
                 pinned: true
             });
 
             generatePinnedNoteTemplate(note_text, note_id)
 
-            //remove pin from pinned ist
-        } else if (e.target.classList.contains('note-pinned')) {
 
-            //this functionality is in the pinned note listener - merge?
-
-
-            //change color    
         } else if (e.target.classList.contains('my-color-picker')) {
 
             pickColor(e.target, id)
@@ -277,16 +286,19 @@ const addNoteListener = (section) => {
             console.log("Deleting subject");
 
             //delete subjects as well as the notes it contains
+
             console.log(section);
             db.collection("subjects").doc(id).delete()
             e.target.parentElement.parentElement.remove(id);
 
+            //Now remove any notes attached to that subject
             db.collection('notes').where('subject', '==', id).get().then((snapshot) => {
-
+                console.log(snapshot.docs);
                 snapshot.docs.forEach(doc => {
-                    console.log(doc);
+                    console.log("DOC DATA IS   " + doc.data());
                     if (doc.data().subject == id) {
-                        doc.delete()
+
+                        doc.ref.delete()
                     }
                 });
             })
@@ -329,6 +341,7 @@ new_subject_form.addEventListener('submit', e => {
 
             console.log("subject doesnt exist....create new one");
             createNewSubject(subject)
+
             subject_exists_modal.classList.remove('is-invalid')
             subject_exists = false
         }

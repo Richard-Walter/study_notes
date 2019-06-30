@@ -12,7 +12,7 @@ const generateNoteTemplate = (note, subject, note_id) => {
     <li class="list-group-item d-inline justify-content-between align-items-center" id="${note_id}">
     <i class="fas fa-thumbtack note-pin float-left pt-1"></i>
     <span class="note-text mx-2">${note}</span>
-    <i class="far fa-trash-alt note-delete float-right pt-1"></i>
+    <i class="far fa-trash-alt note-delete float-right pt-1 pl-2"></i>
     </li>
     `;
 
@@ -24,7 +24,7 @@ const generatePinnedNoteTemplate = (note, note_id) => {
     const html = `
 
     <li class="list-group-item d-inline justify-content-between align-items-center" id="${note_id}">
-    <i class="fas fa-thumbtack note-pinned float-left pt-1"></i>
+    <i class="fas fa-thumbtack note-pinned float-left pt-1 "></i>
     <span class="note-text mx-2">${note}</span>
 </li>
     `;
