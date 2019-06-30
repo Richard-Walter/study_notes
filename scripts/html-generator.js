@@ -1,11 +1,7 @@
 const generateNoteTemplate = (note, subject, note_id) => {
 
-    console.log("generate note template");
-
     subject = document.getElementById(subject)
     note_list = subject.querySelector('.notes')
-    console.log(subject);
-    console.log(note_list);
 
     const html = `
 
@@ -45,7 +41,7 @@ const generateSubjectTemplate = (bgColor, collapse, subject) => {
         </a>
         <i class="subject-delete far fa-window-close fa-lg float-right p-1"></i>
     </header>
-    <div id="collapse1">
+    <div id="collapse1" class="collapse show">
         <ul class="notes list-group mb-2 mx-auto text-dark small ">
 
         </ul>

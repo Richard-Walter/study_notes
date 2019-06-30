@@ -35,7 +35,6 @@ const renderSubjects = () => {
     db.collection('subjects').orderBy('created').get().then((snapshot) => {
 
         docs = snapshot.docs;
-        console.log(docs);
 
         docs.forEach(doc => {
 
