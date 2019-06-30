@@ -89,7 +89,6 @@ const renderNotes = () => {
 
         docs = snapshot.docs;
 
-
         docs.forEach(doc => {
 
             data = doc.data();
@@ -187,10 +186,6 @@ const renderNewSubject = (bgColor, collapse, subject) => {
     //add subject to nav link and spyscroll
     generateNavbarTemplate(subject)
 
-    console.log("RENDERING NEW SUBJECT:  " + subject + "  _ ATTACHING LISTENER");
-    console.log(document.getElementById(subject));
-
-    //add note general listener
     addNoteListener(document.getElementById(subject), subject)
 
 
@@ -203,8 +198,7 @@ const addNoteListener = (section, subject) => {
     let form = section.querySelector('.add-note')
     let id = section.getAttribute("id")
 
-    console.log("ADDING LISTENER");
-    console.log("ID is " + id);
+    console.log("ADDING LISTENER.  ID is " + id);
 
     //Form listener - add new note
     form.addEventListener('submit', e => {
@@ -212,8 +206,6 @@ const addNoteListener = (section, subject) => {
         e.preventDefault();
 
         const note = form.add.value.trim();
-
-        console.log("TESTING add note");
 
         if (note.length) {
 
@@ -283,19 +275,44 @@ const addNoteListener = (section, subject) => {
             //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
 
-            console.log("Deleting subject");
+            //First remove any related pinned notes, then delete subjects from firebase and UI
 
-            //delete subjects as well as the notes it contains
 
-            console.log(section);
-            db.collection("subjects").doc(id).delete()
-            e.target.parentElement.parentElement.remove(id);
+
+
+
+
+            //remove any pinned notes associated with this subject
+            db.collection('notes').where('subject', '==', subject).where('pinned', '==', true).get().then((querySnapshot) => {
+
+                querySnapshot.forEach(doc => {
+                    console.log("query data:");
+                    console.log(doc.data());   //returns an dictionary array  
+                    console.log(doc.id);   //unique id
+
+                    //remove
+                    pinned_note = pinned_notes.querySelector("#" + doc.id)
+                    console.log("REMOVING PINNED NOTE SINCE WE ARE DELETING SUBJECT: " + pinned_note);
+                    pinned_note.remove()
+
+                });
+
+                //now safe to delete from database
+                db.collection("subjects").doc(id).delete()
+                e.target.parentElement.parentElement.remove(id);
+            })
+
+
+
+
+
+
+
 
             //Now remove any notes attached to that subject
             db.collection('notes').where('subject', '==', id).get().then((snapshot) => {
-                console.log(snapshot.docs);
+
                 snapshot.docs.forEach(doc => {
-                    console.log("DOC DATA IS   " + doc.data());
                     if (doc.data().subject == id) {
 
                         doc.ref.delete()
