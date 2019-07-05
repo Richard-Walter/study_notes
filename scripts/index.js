@@ -286,3 +286,6 @@ pinned_notes.addEventListener('click', e => {
     }
 })
 
+const signup_modal = document.querySelector('#modal-signup')
+// $('#modal-signup').modal('show')
+

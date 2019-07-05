@@ -51,25 +51,90 @@
                 <!-- <li class="nav-item logged-in d-none"> -->
                 <li class="nav-item logged-in">
 
-                    <a class="nav-link " href="#" class="grey-text" id="logout">
+                    <a class="nav-link grey-text" href="#" id="#logout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="mx-1"> log out</span></a>
                 </li>
 
                 <li class="nav-item logged-out">
 
-                    <a class="nav-link " href="#" class="grey-text modal-trigger" data-target="modal-login">
+                    <a class="nav-link grey-text" href="#" data-toggle="modal" data-target="#modal-login"> 
                         <i class="fas fa-sign-in-alt"></i>
                         <span class="mx-1"> login</span></a>
                 </li>
                 <li class="nav-item logged-out">
-                    <a class="nav-link" href="#" class="grey-text modal-trigger" data-target="modal-signup">
+                    <a class="nav-link grey-text" href="#" data-toggle="modal" data-target="#modal-signup">
                         <i class="fas fa-user-plus"></i>
                         <span class="mx-1"> sign up</span></a>
                 </li>
             </ul>
         </div>
     </nav>
+
+    <!-- SIGN UP MODAL -->
+    <div id="modal-signup" class="modal">
+        <div class="modal-content">
+            <h4>Sign up</h4><br />
+            <form id="signup-form">
+                <div class="input-field">
+                    <input type="email" id="signup-email" required />
+                    <label for="signup-email">Email address</label>
+                </div>
+                <div class="input-field">
+                    <!--require = input field must be filled out before submitting-->
+                    <input type="password" id="signup-password" required />
+                    <label for="signup-password">Choose password</label>
+                </div>
+                <div class="input-field">
+                    <!--require = input field must be filled out before submitting-->
+                    <input type="text" id="signup-bio" required />
+                    <label for="signup-bio">One Line Bio</label>
+                </div>
+                <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+                <p class="error pink-text center-align"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="modal-login" class="modal">
+        <div class="modal-dialog">
+            <h4>Login</h4><br />
+            <form id="login-form">
+                <div class="input-field">
+                    <input type="email" id="login-email" required />
+                    <label for="login-email">Email address</label>
+                </div>
+                <div class="input-field">
+                    <input type="password" id="login-password" required />
+                    <label for="login-password">Your password</label>
+                </div>
+                <button class="btn yellow darken-2 z-depth-0">Login</button>
+                <p class="error pink-text center-align"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONFIRM_DELETE MODAL -->
+    <div id="confirm-delete" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span>Header info here</span>
+                </div>
+                <div class="modal-body">
+                    <span>Body info here</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <!-- NOTES -->
     <div class="container ">
@@ -83,11 +148,11 @@
         <div class="title pt-4 px-3 mt-3 mb-4 text-center  border rounded" id="title">
             <h4 class="d-inline text-light font-weight-normal ">Richard's Study Notes</h4>
             <form class="form-add-subject text-center form-group   ">
-                        <!-- add class  'is-invalid' if subject doesnt exist  -->
-                     <input class="form-control m-auto d-flex form-control-sm" id="validateUniqueSubject" placeholder="  create new subject ..."
-                    type="text" name="add_subject"/>
+                <!-- add class  'is-invalid' if subject doesnt exist  -->
+                <input class="form-control m-auto d-flex form-control-sm" id="validateUniqueSubject"
+                    placeholder="  create new subject ..." type="text" name="add_subject" />
                 <div class="invalid-feedback">
-                    Subject already exists.  Please provide a unique suject name.
+                    Subject already exists. Please provide a unique suject name.
                 </div>
             </form>
         </div>
@@ -134,6 +199,7 @@
 
         </div>
     </footer>
+
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
