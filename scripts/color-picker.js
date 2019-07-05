@@ -10,10 +10,6 @@
 
 const pickColor = (target, subject) => {
 
-
-    console.log("in pick color method");
-    console.log(target)
-
     var picker = new Picker(target)
     picker.setColor('#673ab7', true)
 

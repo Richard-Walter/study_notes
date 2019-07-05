@@ -28,134 +28,45 @@ db.collection('subjects').doc("pinned").set({
     subject: "pinned"
 });
 
-
 // render the subjects 
-const renderSubjects = () => {
+db.collection('subjects').orderBy('created').get().then((snapshot) => {
 
-    db.collection('subjects').orderBy('created').get().then((snapshot) => {
+    snapshot.docs.forEach(doc => {
 
-        docs = snapshot.docs;
+        data = doc.data()
+        if (data.subject == "pinned") {
 
-        docs.forEach(doc => {
+            //Already rendered - just update attributes in case they have changed
+            pinned_notes.style["background"] = data.bgColor
 
-            data = doc.data()
-            if (data.subject == "pinned") {
-
-                //update attributes in case they have changed
-                pinned_notes.style["background"] = data.bgColor
-
-            } else {
-                renderNewSubject(data.bgColor, data.collapse, data.subject)
-            }
-        });
+        } else {
+            renderNewSubject(data.bgColor, data.collapse, data.subject)
+        }
     });
+});
 
-}
+//render notes associated with each subject
+db.collection('notes').orderBy('created').get().then((snapshot) => {
 
-renderSubjects();
+    snapshot.docs.forEach(doc => {
 
-// setup realtime firebase note listener
-// db.collection('notes').orderBy('created').onSnapshot(snapshot => {
+        data = doc.data();
+        subject = data.subject;
+        pinned = data.pinned
+        note = data.note
+        id = doc.id
 
-//     let changes = snapshot.docChanges();
-//     console.log("CHANGES ARE:");
-//     console.log(changes);
-
-//     changes.forEach(change => {
-//         console.log(change.doc);
-//         console.log("Change type:  " + change.type);
-
-//         if (change.type == 'added') {
-//             renderNotes(change.doc);
-
-//         } else if (change.type == 'removed') {
-
-//             console.log("HKJHKHHKHKHJ");
-//             //remove from pinned notes if pinned
-//             if (change.doc.data().pinned = true) {
-
-//                 // e.target.parentElement.remove();
-//             }
-
-//         }
-//     });
-// });
-
-const renderNotes = () => {
+        console.log("Rendering notes: " + id, subject, note, pinned);
 
 
-    db.collection('notes').orderBy('created').get().then((snapshot) => {
+        if (pinned == true) {
 
-        docs = snapshot.docs;
+            generatePinnedNoteTemplate(note, id)
+        }
 
-        docs.forEach(doc => {
-
-            data = doc.data();
-            subject = data.subject;
-            pinned = data.pinned
-            note = data.note
-            id = doc.id
-
-            console.log("Rendering notes: " + id, subject, note, pinned);
-
-
-            if (pinned == true) {
-                console.log("rendering pinned notes");
-                generatePinnedNoteTemplate(note, id)
-            }
-            generateNoteTemplate(note, subject, id);
-        })
+        generateNoteTemplate(note, subject, id);
     })
-}
-
-renderNotes();
-
-// //test - get refeerence to pinned collection
-// db.collection('pinned').orderBy('timestamp').get().then((snapshot) => {
-//     console.log(snapshot.docs);
-//     snapshot.docs.forEach(doc => {
-
-//         console.log(doc.data().note);   //returns note
-//         console.log(doc.data().timestamp);   //returns note
-//         console.log(doc.data().timestamp.seconds);   //returns note
-
-//         console.log(doc.id);   //unique id
-//     });
-// })
-
-// //test - add/saving  to pinned collection
-// db.collection('pinned').add({
-//     note: "note added from javascript",
-//     pinned: false
-// });
-
-// updating records (console demo)
-// db.collection('pinned').doc('DOgwUvtEQbjZohQNIeMr').update({
-//     name: 'mario world'
-// });
-
-//test - delete  to pinned collection
-// db.collection('pinned').doc("aPTDbJFRLIiDg0X1uvkb").delete();
-
-//querying data
-// db.collection('pinned').where('timestamp', '==', '1561688100').get().then((snapshot) => {
-//     console.log(snapshot.docs);
-//     snapshot.docs.forEach(doc => {
-//         console.log("query data:");
-//         console.log(doc.data());   //returns an dictionary array  
-//         console.log(doc.id);   //unique id
-//     });
-// })
-
-// updating records (console demo)
-// db.collection('pinned').doc('DOgwUvtEQbjZohQNIeMr').update({
-//     timestamp: data_submitted
-// });
-
-// db.collection('pinned').doc('DOgwUvtEQbjZohQNIeMr').update({
-//     note: 'lets update the note'
-// });
-
+})
 
 
 const createNewSubject = (subject) => {
@@ -230,7 +141,6 @@ const addNoteListener = (section, subject) => {
 
         e.preventDefault();
 
-
         //delete note
         if (e.target.classList.contains('note-delete')) {
 
@@ -274,13 +184,7 @@ const addNoteListener = (section, subject) => {
             //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
 
-            //First remove any related pinned notes, then delete subjects from firebase and UI
-
-
-
-
-
-
+      
             //remove any pinned notes associated with this subject
             db.collection('notes').where('subject', '==', subject).where('pinned', '==', true).get().then((querySnapshot) => {
 
@@ -301,13 +205,6 @@ const addNoteListener = (section, subject) => {
                 e.target.parentElement.parentElement.remove(id);
             })
 
-
-
-
-
-
-
-
             //Now remove any notes attached to that subject
             db.collection('notes').where('subject', '==', id).get().then((snapshot) => {
 
@@ -318,21 +215,15 @@ const addNoteListener = (section, subject) => {
                     }
                 });
             })
-
-
         }
     })
-
 }
-
 
 //Add new subject button listener on title form
 new_subject_form.addEventListener('submit', e => {
 
     e.preventDefault();
-
     let subject_exists = null;
-
     const subject = new_subject_form.add_subject.value.trim();
     // console.log("add new subject: " + subject);
 
