@@ -1,3 +1,5 @@
+//only delete subject if this flag is set to true
+let deleteSubject = false
 
 //new subject listener
 const new_subject_form = document.querySelector('.form-add-subject')
@@ -98,9 +100,8 @@ const renderNewSubject = (bgColor, collapse, subject) => {
     generateNavbarTemplate(subject)
 
     // addNoteListener(document.getElementById(subject), subject)
-
-
 }
+
 
 //Add form submit listener
 gen_notes_list.addEventListener('submit', e => {
@@ -159,8 +160,6 @@ gen_notes_list.addEventListener('click', e => {
             e.target.parentElement.remove();
         })
 
-
-
         //pin note to pinned list
     } else if (e.target.classList.contains('note-pin')) {
 
@@ -175,7 +174,7 @@ gen_notes_list.addEventListener('click', e => {
 
 
     } else if (e.target.classList.contains('my-color-picker')) {
-        
+
         section = e.target.parentElement.parentElement
         id = section.getAttribute("id")
 
@@ -184,6 +183,14 @@ gen_notes_list.addEventListener('click', e => {
         //delete subject
     } else if (e.target.classList.contains('subject-delete')) {
 
+
+        // $('#confirmSubjectDelete').modal('show')
+
+
+
+        console.log("deleting subject");
+        //reset flag
+        deleteSubject = false
 
         section = e.target.parentElement.parentElement
         id = section.getAttribute("id")
@@ -219,7 +226,12 @@ gen_notes_list.addEventListener('click', e => {
                 }
             });
         })
+    } else {
+
+        //do not delete subject
+        console.log("not deleting subject");
     }
+
 })
 
 
@@ -290,7 +302,4 @@ pinned_notes.addEventListener('click', e => {
     }
 })
 
-
-// const signup_modal = document.querySelector('#modal-signup')
-// $('#modal-signup').modal('show')
 

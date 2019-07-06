@@ -9,18 +9,6 @@ body {
 }
 
 
-/* input[type=text],
-input[type=text]:focus{
-  color: #fff;
-  border: none;
-  background: rgba(0,0,0,0.2);
-  max-width: 400px;
-} */
-
-/* .todos li{
-  background: #f0f1eefb;
-} */
-
 .title, .login-signup {
   background: #e2bd18;
 }
@@ -35,12 +23,170 @@ input[type=text]:focus{
   padding-right: 200px; */
 }
 
-/* #pinnedNotes { background: #c9611b;} */
+/* MODAL STYLING */
+
+.signup-form {
+  width: 390px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+.signup-form h2 {
+  color: #636363;
+      margin: 0 0 15px;
+  text-align: center;
+  }
+  .signup-form .lead {
+      font-size: 14px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+  .signup-form form {		
+  border-radius: 1px;
+    margin-bottom: 15px;
+      background: #fff;
+  border: 1px solid #f3f3f3;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+  }
+.signup-form .form-group {
+  margin-bottom: 20px;
+}
+.signup-form label {
+  font-weight: normal;
+  font-size: 13px;
+}
+.signup-form .form-control {
+  min-height: 38px;
+  box-shadow: none !important;
+  border-width: 0 0 1px 0;
+}	
+.signup-form .input-group-addon {
+  max-width: 42px;
+  text-align: center;
+  background: none;
+  border-width: 0 0 1px 0;
+  padding-left: 5px;
+}
+  .signup-form .btn {        
+      font-size: 16px;
+      font-weight: bold;
+  background: #19aa8d;
+      border-radius: 3px;
+  border: none;
+  min-width: 140px;
+      outline: none !important;
+  }
+.signup-form .btn:hover, .signup-form .btn:focus {
+  background: #179b81;
+}
+.signup-form a {
+  color: #19aa8d;
+  text-decoration: none;
+}	
+.signup-form a:hover {
+  text-decoration: underline;
+}
+.signup-form .fa {
+  font-size: 21px;
+}
+.signup-form .fa-paper-plane {
+  font-size: 17px;
+}
+.signup-form .fa-check {
+  color: #fff;
+  left: 9px;
+  top: 18px;
+  font-size: 7px;
+  position: absolute;
+}
+</style>
+</head>
+<body>
+<div class="signup-form">	
+  <form action="/examples/actions/confirmation.php" method="post">
+  <h2>Create Account</h2>
+  
 
 
-/* input:placeholder-shown {
-  font-size: 75%;
-} */
+.modal-delete {
+  color: #636363;
+  width: 350px;
+}
+
+.modal-login {
+  color: #636363;
+  width: 350px;
+}
+.modal-login .modal-content {
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+}
+.modal-login .modal-header {
+  border-bottom: none;
+  position: relative;
+  justify-content: center;
+}
+.modal-login h4 {
+  text-align: center;
+  font-size: 26px;
+}
+.modal-login  .form-group {
+  position: relative;
+}
+.modal-login i {
+  position: absolute;
+  left: 13px;
+  top: 11px;
+  font-size: 18px;
+}
+.modal-login .form-control {
+  padding-left: 40px;
+}
+.modal-login .form-control:focus {
+  border-color: #12b5e5;
+}
+.modal-login .form-control, .modal-login .btn {
+  min-height: 40px;
+  border-radius: 3px; 
+      transition: all 0.5s;
+}
+.modal-login .close {
+      position: absolute;
+  top: -5px;
+  right: -5px;
+}
+  .modal-login input[type="checkbox"] {
+      margin-top: 1px;
+  }
+  .modal-login .forgot-link {
+      color: #e2bd18;
+      float: right;
+  }
+.modal-login .btn {
+  background: #e2bd18;
+  border: none;
+  line-height: normal;
+}
+.modal-login .btn:hover, .modal-login .btn:focus {
+  background: #e2bd18;
+}
+.modal-login .modal-footer {
+  color: #999;
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 13px;
+      margin-top: -20px;
+  justify-content: center;
+}
+.modal-login .modal-footer a {
+  color: #e2bd18;
+}
+.trigger-btn {
+  display: inline-block;
+  margin: 100px auto;
+}
 
 
 .blank {
