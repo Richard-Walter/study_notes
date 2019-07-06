@@ -35,12 +35,6 @@
                 <li class="nav-item noteLink">
                     <a class="nav-link " href="#pinnedNotes">Pinned</a>
                 </li>
-                <li class="nav-item noteLink">
-                    <a class="nav-link " href="#note1">Note 1</a>
-                </li>
-                <li class="nav-item noteLink">
-                    <a class="nav-link " href="#note2">Note 2</a>
-                </li>
 
             </ul>
 
@@ -49,19 +43,19 @@
                 <!-- <li class="nav-item logged-in d-none"> -->
                 <li class="nav-item logged-in">
 
-                    <a class="nav-link grey-text" href="#" id="#logout">
+                    <a class="nav-link " href="#" id="logout">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="mx-1"> log out</span></a>
                 </li>
 
                 <li class="nav-item logged-out">
 
-                    <a class="nav-link grey-text" href="#" data-toggle="modal" data-target="#modalLogin">
+                    <a class="nav-link " href="#" data-toggle="modal" data-target="#modalLogin">
                         <i class="fas fa-sign-in-alt"></i>
                         <span class="mx-1"> login</span></a>
                 </li>
                 <li class="nav-item logged-out">
-                    <a class="nav-link grey-text" href="#" data-toggle="modal" data-target="#modalSignup">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#modalSignup">
                         <i class="fas fa-user-plus"></i>
                         <span class="mx-1"> sign up</span></a>
                 </li>
@@ -78,22 +72,24 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form action="/examples/actions/confirmation.php" method="post">
+                    <form id="signup-form">
                         <div class="form-group">
                             <i class="fa fa-user"></i>
-                            <input type="text" class="form-control" name="username" placeholder="Username"
-                                required="required">
+                            <input type="text" class="form-control" id="signup-name" name="First Name"
+                                placeholder="First Name" required="required">
                         </div>
                         <div class="form-group">
                             <i class="fa fa-paper-plane"></i>
-                            <input type="email" class="form-control" name="email" placeholder="Email address">
+                            <input type="email" class="form-control" id="signup-email" name="email"
+                                placeholder="Email Address">
                         </div>
                         <div class="form-group">
                             <i class="fa fa-lock"></i>
-                            <input type="password" class="form-control" placeholder="Password" required="required">
+                            <input type="password" class="form-control" id="signup-password" placeholder="Password"
+                                required="required">
                         </div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
 
                             <span class="input-group-addon">
                                 <i class="fa fa-lock"></i>
@@ -101,18 +97,19 @@
                             </span>
                             <input type="password" class="form-control" name="confirm_password"
                                 placeholder="Confirm Password" required="required">
-                        </div>
+                        </div> -->
                 </div>
 
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary btn-block btn-lg" value="Sign Up">
                 </div>
+                <p class="error pink-text center-align"></p>
                 </form>
-                <div class="modal-footer">Already have an account? <a href=""> Sign in</a></div>
+                <div class="modal-footer">Already have an account?<a href="">Sign in</a></div>
             </div>
         </div>
     </div>
-    
+
 
 
 
@@ -127,14 +124,14 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <form action="/examples/actions/confirmation.php" method="post">
+                    <form id="login-form">
                         <div class="form-group">
                             <i class="fa fa-user"></i>
-                            <input type="text" class="form-control" placeholder="Username" required="required">
+                            <input type="text" class="form-control" id="login-email" placeholder="Email Address" required="required">
                         </div>
                         <div class="form-group">
                             <i class="fa fa-lock"></i>
-                            <input type="password" class="form-control" placeholder="Password" required="required">
+                            <input type="password" class="form-control" id="login-password" placeholder="Password" required="required">
                         </div>
                         <div class="form-group small clearfix">
                             <label class="checkbox-inline"><input type="checkbox"> Remember me</label>
@@ -143,6 +140,7 @@
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary btn-block btn-lg" value="Sign in">
                         </div>
+                        <p class="error pink-text center-align"></p>
                     </form>
                 </div>
                 <div class="modal-footer">Don't have an account? <a href="">Sign up</a></div>
@@ -248,6 +246,8 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-functions.js"></script>
 
     <script>
         // Your web app's Firebase configuration
@@ -268,6 +268,7 @@
         const db = firebase.firestore();
         const functions = firebase.functions();
 
+
     </script>
 
 
@@ -282,6 +283,7 @@
         crossorigin="anonymous"></script>
 
     <script src="scripts/index.js"></script>
+    <script src="scripts/authentication.js"></script>
     <script src="scripts/html-generator.js"></script>
     <script src="scripts/color-picker.js"></script>
     <script src="https://unpkg.com/vanilla-picker@2"></script>
