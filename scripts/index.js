@@ -314,7 +314,10 @@ function setUpStudyNotes(user) {
     if (user) {
 
         console.log("USER LOGGED IN ");
+
         //show page title with user name and hide the loging to view notes panel
+        //show pinned notes
+        pinned_notes.classList.remove("d-none")
         login_signup_pane.classList.add("d-none");
         
         page_title_pane.classList.remove("d-none");
@@ -328,6 +331,8 @@ function setUpStudyNotes(user) {
 
         console.log("USER NOT LOGGED IN ");
         // hide the page title and  show login to view notes pane
+        //hide pinned notes
+        pinned_notes.classList.add("d-none")
         login_signup_pane.classList.remove("d-none");
         page_title_pane.classList.add("d-none");
         

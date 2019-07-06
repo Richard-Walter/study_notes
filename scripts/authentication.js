@@ -9,6 +9,7 @@ auth.onAuthStateChanged((user) => {
       user.getIdTokenResult().then((idTokenResult) => {
         console.log(idTokenResult.claims);
         console.log(user);
+        console.log("user is :" + user.uid);
   
         //this line seems to create a admin field dynamically??
         user.admin = idTokenResult.claims.admin

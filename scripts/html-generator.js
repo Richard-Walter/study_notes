@@ -72,3 +72,4 @@ const generateNavbarTemplate = (subject) => {
     navbar_List.innerHTML += html
 
 }
+
