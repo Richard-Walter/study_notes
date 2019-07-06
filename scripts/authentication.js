@@ -1,4 +1,34 @@
-//**** SIGN IN ******/
+/****  AUTHENTICATION LISTENER */  
+auth.onAuthStateChanged((user) => {
+
+  
+  
+    if (user) { //if not logged in the user object is null
+  
+      // get user claims
+      user.getIdTokenResult().then((idTokenResult) => {
+        console.log(idTokenResult.claims);
+        console.log(user);
+  
+        //this line seems to create a admin field dynamically??
+        user.admin = idTokenResult.claims.admin
+        // setupUI(user)
+      })
+  
+      //get guide data from firestore. Snapshot is also a listener
+      db.collection('guides').onSnapshot((snapshot) => {
+        setUpStudyNotes(user)
+        // setupUI(user)
+  
+      });
+    } else {    //user not logged in
+      setUpStudyNotes()
+    //   setupUI()
+    }
+  })
+
+
+//**** SIGN UP ******/
 
 const signupForm = document.querySelector('#signup-form')
 
@@ -14,8 +44,6 @@ signupForm.addEventListener('submit', e => {
     // sign up the user using firebase auth object we created in the HTML
     //this is asyncronous and returns a promise containing a user credential
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
-
-        console.log(cred);
 
         //create a new document in users collection (firebase will create if doesn't exist)
         //then instead of add() we use doc() where we can create out own ID(userID)
@@ -70,6 +98,7 @@ const logout = document.querySelector('#logout')
 logout.addEventListener('click', e => {
   e.preventDefault();
   auth.signOut().then(() => {
+      //This is tracked by the authentification listener 
       console.log("User has logged out");
   })
 })
