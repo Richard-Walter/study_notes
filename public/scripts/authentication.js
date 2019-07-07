@@ -65,7 +65,7 @@ signupForm.addEventListener('submit', e => {
     $("#modalSignup").modal("toggle");
 
     signupForm.reset()
-    // signupForm.querySelector('.error').innerHTML = ''
+    signupForm.querySelector('.error').innerHTML = ''
 
   }).catch((err) => {
     signupForm.querySelector('.error').innerHTML = err.message
