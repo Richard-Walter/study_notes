@@ -1,32 +1,26 @@
-/****  AUTHENTICATION LISTENER */  
+/****  AUTHENTICATION LISTENER */
 auth.onAuthStateChanged((user) => {
 
-  
-  
-    if (user) { //if not logged in the user object is null
-  
-      // get user claims
-      user.getIdTokenResult().then((idTokenResult) => {
-        console.log(idTokenResult.claims);
-        console.log(user);
-        console.log("user is :" + user.uid);
-  
-        //this line seems to create a admin field dynamically??
-        user.admin = idTokenResult.claims.admin
-        // setupUI(user)
-      })
-  
-      //get guide data from firestore. Snapshot is also a listener
-      db.collection('guides').onSnapshot((snapshot) => {
-        setUpStudyNotes(user)
-        // setupUI(user)
-  
-      });
-    } else {    //user not logged in
-      setUpStudyNotes()
+
+  if (user) { //User is logged in
+
+    // get user claims
+    user.getIdTokenResult().then((idTokenResult) => {
+      console.log(idTokenResult.claims);
+      console.log(user);
+      console.log("user is :" + user.uid);
+
+      //this line seems to create a admin field dynamically??
+      user.admin = idTokenResult.claims.admin
+      setUpStudyNotes(user)
+      // setupUI(user)
+    })
+
+  } else {    //user not logged in
+    setUpStudyNotes()
     //   setupUI()
-    }
-  })
+  }
+})
 
 
 //**** SIGN UP ******/
@@ -35,37 +29,37 @@ const signupForm = document.querySelector('#signup-form')
 
 // event listener is submit rather than on button as it listens to return as well
 signupForm.addEventListener('submit', e => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const email = signupForm['signup-email'].value
-    const password = signupForm['signup-password'].value
-    const name = signupForm['signup-name'].value
+  const email = signupForm['signup-email'].value
+  const password = signupForm['signup-password'].value
+  const name = signupForm['signup-name'].value
 
 
-    // sign up the user using firebase auth object we created in the HTML
-    //this is asyncronous and returns a promise containing a user credential
-    auth.createUserWithEmailAndPassword(email, password).then(cred => {
+  // sign up the user using firebase auth object we created in the HTML
+  //this is asyncronous and returns a promise containing a user credential
+  auth.createUserWithEmailAndPassword(email, password).then(cred => {
 
-        //create a new document in users collection (firebase will create if doesn't exist)
-        //then instead of add() we use doc() where we can create out own ID(userID)
-        //it then returns a promise
-        // return db.collection('users').doc(cred.user.uid).set({
-        //     bio: signupForm['signup-bio'].value,
-        //     displayName: name
-        // })
+    //create a new document in users collection (firebase will create if doesn't exist)
+    //then instead of add() we use doc() where we can create out own ID(userID)
+    //it then returns a promise
+    // return db.collection('users').doc(cred.user.uid).set({
+    //     bio: signupForm['signup-bio'].value,
+    //     displayName: name
+    // })
 
-    }).then(() => {
+  }).then(() => {
 
-               
-        // $('#modalSignup').hide();
-        $("#modalSignup").modal("toggle");
-        
-        signupForm.reset()
-        // signupForm.querySelector('.error').innerHTML = ''
 
-    }).catch((err) => {
-        signupForm.querySelector('.error').innerHTML = err.message
-    })
+    // $('#modalSignup').hide();
+    $("#modalSignup").modal("toggle");
+
+    signupForm.reset()
+    // signupForm.querySelector('.error').innerHTML = ''
+
+  }).catch((err) => {
+    signupForm.querySelector('.error').innerHTML = err.message
+  })
 })
 
 //**** LOG IN ******/
@@ -89,17 +83,18 @@ loginForm.addEventListener('submit', e => {
     // loginForm.querySelector('.error').innerHTML = ''
   }).catch((err) => {
     loginForm.querySelector('.error').innerHTML = err.message
- })
+  })
 
 })
 
 
 //**** LOG OUT ******/
 const logout = document.querySelector('#logout')
+
 logout.addEventListener('click', e => {
-  e.preventDefault();
-  auth.signOut().then(() => {
-      //This is tracked by the authentification listener 
-      console.log("User has logged out");
-  })
+
+
+  window.location.reload(true);
+
+  auth.signOut()
 })

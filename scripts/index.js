@@ -354,11 +354,10 @@ function setUpStudyNotes(user) {
 
         //create no subjects
         gen_notes_list.innerHTML = ""
+        pinned_note_list.innerHTML = ""
 
         //update Nav bar
-        generateNavbarTemplate("");
-
-      
+        generateNavbarTemplate("");   
 
     }
 }
