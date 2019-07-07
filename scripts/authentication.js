@@ -23,12 +23,12 @@ auth.onAuthStateChanged((user) => {
       })
 
       setUpStudyNotes(user)
-      // setupUI(user)
+      setupUI(user)
     })
 
   } else {    //user not logged in
     setUpStudyNotes()
-    //   setupUI()
+    setupUI()
   }
 })
 

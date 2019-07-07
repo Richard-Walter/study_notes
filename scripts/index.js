@@ -18,11 +18,25 @@ const gen_notes_list = document.querySelector('.generated-notes')
 
 //nav bar list
 const navbar_List = document.querySelector('#navbarList')
+const loggedOutLinks = document.querySelectorAll('.logged-out')
+const loggedInLinks = document.querySelectorAll('.logged-in')
 
 //subject exists modal
 const subject_exists_modal = document.querySelector('#validateUniqueSubject')
 
 console.log("refreshing page");
+
+const setupUI = (user) => {
+    if (user) {
+        //toggle ui elements
+        loggedInLinks.forEach((item) => item.classList.remove("d-none"))
+        loggedOutLinks.forEach((item) => item.classList.add("d-none"))  
+    } else {
+        //toggle ui elements
+        loggedInLinks.forEach((item) => item.classList.add("d-none"))
+        loggedOutLinks.forEach((item) => item.classList.remove("d-none"))  
+    }
+}
 
 // create pinned notes (required) - use set as it doesnt create another doc if exists
 function createPinnedNotes(user) {
