@@ -1,7 +1,7 @@
 const generateNoteTemplate = (note, subject, note_id) => {
 
     subject = document.getElementById(subject)
-    
+
     note_list = subject.querySelector('.notes')
 
     const html = `
@@ -31,9 +31,10 @@ const generatePinnedNoteTemplate = (note, note_id) => {
 
 const generateSubjectTemplate = (bgColor, collapse, subject) => {
 
-    subject_nospace = subject.split(' ').join('_')
+    if (subject) {
+        subject_nospace = subject.split(' ').join('_')
 
-    const html = `
+        const html = `
 
     <section class="py-1 my-4 rounded container-fluid" style="background:${bgColor}" id="${subject}">
     <header class="subject-header text-center text-light border-bottom border-light mb-2 ">
@@ -56,19 +57,24 @@ const generateSubjectTemplate = (bgColor, collapse, subject) => {
 </section>
     `;
 
-    gen_notes_list.innerHTML += html
+        gen_notes_list.innerHTML += html
 
+    } else {
+        gen_notes_list.innerHTML = ""
+    }
 }
 
-
 const generateNavbarTemplate = (subject) => {
+    if (subject) {
+        const html = `
 
-    const html = `
-
-    <li class="nav-item noteLink">
-    <a class="nav-link " href="#${subject}">${subject}</a>
-    </li>
-    `;
-    navbar_List.innerHTML += html
+        <li class="${subject} nav-item noteLink">
+        <a class="nav-link " href="#${subject}">${subject}</a>
+        </li>
+        `;
+        navbar_List.innerHTML += html
+    } else {
+        navbar_List.innerHTML = ""
+    }
 
 }

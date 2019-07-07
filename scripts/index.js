@@ -25,10 +25,11 @@ const subject_exists_modal = document.querySelector('#validateUniqueSubject')
 console.log("refreshing page");
 
 // create pinned notes (required) - use set as it doesnt create another doc if exists
-function createPinnedNotes() {
+function createPinnedNotes(user) {
 
     db.collection('subjects').doc("pinned").set({
 
+        UID: user.uid,
         bgColor: "#c9611b",
         collapse: false,
         created: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -37,28 +38,33 @@ function createPinnedNotes() {
 }
 
 
+
 // render the subjects 
-function renderSubjects() {
-    db.collection('subjects').orderBy('created').get().then((snapshot) => {
+function renderSubjects(user) {
 
-        snapshot.docs.forEach(doc => {
+    if (user) {
+        db.collection('subjects').where('UID', '==', user.uid).orderBy('created').get().then((snapshot) => {
 
-            data = doc.data()
-            if (data.subject == "pinned") {
+            snapshot.docs.forEach(doc => {
 
-                //Already rendered - just update attributes in case they have changed
-                pinned_notes.style["background"] = data.bgColor
+                data = doc.data()
+                if (data.subject == "pinned") {
 
-            } else {
-                renderNewSubject(data.bgColor, data.collapse, data.subject)
-            }
+                    //Already rendered - just update attributes in case they have changed
+                    pinned_notes.style["background"] = data.bgColor
+
+                } else {
+                    renderNewSubject(data.bgColor, data.collapse, data.subject)
+                }
+            });
         });
-    });
+    } else {
+        renderNewSubject("", "", "")
+    }
 }
-
 //render notes associated with each subject
-function renderNotes() {
-    db.collection('notes').orderBy('created').get().then((snapshot) => {
+function renderNotes(user) {
+    db.collection('notes').where('UID', '==', user.uid).orderBy('created').get().then((snapshot) => {
 
         snapshot.docs.forEach(doc => {
 
@@ -81,15 +87,19 @@ function renderNotes() {
     })
 }
 
-const createNewSubject = (subject) => {
+const createNewSubject = (subject, user) => {
 
     //store new subject in firebase    
+    console.log("Creating new subject");
+    console.log("subject is: " + subject);
+    console.log("User is: " + user.uid);
 
     bgColor = "#673ab7";
     collapse = false;
 
     db.collection("subjects").doc(subject).set({
 
+        UID: user.uid,
         bgColor: bgColor,
         collapse: collapse,
         created: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -113,7 +123,7 @@ const renderNewSubject = (bgColor, collapse, subject) => {
 
 
 
-function addSubjectListeners() {
+function addSubjectListeners(user) {
 
     //Add form submit listener
     gen_notes_list.addEventListener('submit', e => {
@@ -128,6 +138,7 @@ function addSubjectListeners() {
 
             db.collection('notes').add({
 
+                UID: user.uid,
                 note: note,
                 pinned: false,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -199,8 +210,8 @@ function addSubjectListeners() {
             id = section.getAttribute("id")
             subject = section.getAttribute("id")
 
-            //remove any pinned notes associated with this subject
-            db.collection('notes').where('subject', '==', subject).where('pinned', '==', true).get().then((querySnapshot) => {
+            //remove any pinned notes associated with this subject and user
+            db.collection('notes').where('UID', '==', user.uid).where('subject', '==', subject).where('pinned', '==', true).get().then((querySnapshot) => {
 
                 querySnapshot.forEach(doc => {
                     console.log("query data:");
@@ -229,20 +240,25 @@ function addSubjectListeners() {
                     }
                 });
             })
+
+            //update navbar
+            navbar_List.querySelector("." + subject).innerHTML = "";
+
         }
     })
 }
 
 //Add new subject button listener on title form
-function addNewSubjectListener() {
+function addNewSubjectListener(user) {
     new_subject_form.addEventListener('submit', e => {
 
         e.preventDefault();
         let subject_exists = null;
         const subject = new_subject_form.add_subject.value.trim();
-        // console.log("add new subject: " + subject);
 
-        db.collection('subjects').get().then((snapshot) => {
+        console.log("add new subject: " + subject);
+
+        db.collection('subjects').where('UID', '==', user.uid).get().then((snapshot) => {
 
             snapshot.docs.forEach(doc => {
 
@@ -257,12 +273,13 @@ function addNewSubjectListener() {
             if (subject_exists) {
 
                 subject_exists_modal.classList.add('is-invalid')
-                console.log("this subject is invlaid- displaying error");
+                console.log("this subject already exists- displaying error");
 
             } else {
 
                 console.log("subject doesnt exist....create new one");
-                createNewSubject(subject)
+
+                createNewSubject(subject, user)
 
                 subject_exists_modal.classList.remove('is-invalid')
                 subject_exists = false
@@ -304,37 +321,44 @@ function addPinnedNoteListener() {
 function setUpStudyNotes(user) {
 
 
-    createPinnedNotes();
-    renderSubjects();
-    renderNotes();
-    addSubjectListeners();
-    addNewSubjectListener();
-    addPinnedNoteListener();
-
     if (user) {
 
         console.log("USER LOGGED IN ");
 
-        //show page title with user name and hide the loging to view notes panel
-        //show pinned notes
+        createPinnedNotes(user);
+        renderSubjects(user);
+        renderNotes(user);
+        addSubjectListeners(user);
+        addNewSubjectListener(user);
+        addPinnedNoteListener();
+
+        //show page title  with user name, pinned notes and hide the loging to view notes panel
+
         pinned_notes.classList.remove("d-none")
         login_signup_pane.classList.add("d-none");
-        
+
         page_title_pane.classList.remove("d-none");
 
         title_text = page_title_pane.querySelector(".title-text")
 
         console.log(title_text.innerText);
 
-
     } else {
 
         console.log("USER NOT LOGGED IN ");
-        // hide the page title and  show login to view notes pane
-        //hide pinned notes
+
+        // hide page title, pinned notes.  Show login to view notes pane
         pinned_notes.classList.add("d-none")
         login_signup_pane.classList.remove("d-none");
         page_title_pane.classList.add("d-none");
-        
+
+        //create no subjects
+        gen_notes_list.innerHTML = ""
+
+        //update Nav bar
+        generateNavbarTemplate("");
+
+      
+
     }
 }
