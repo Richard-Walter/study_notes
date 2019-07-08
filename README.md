@@ -1,6 +1,6 @@
 # study_notes
 
-This is simple web app written in native javascript that allows you to store study notes on various subjects.  IMportant points can be pinned to the top.
+This is simple web app written in native javascript that allows you to store study notes/ideas (one liners) on various subjects.  Important notes can be pinned to the top.
 
 Sign up to create your own account and start creating subjects and notes.  Otherwise, see a working example by logging in with the following username and password:
 
