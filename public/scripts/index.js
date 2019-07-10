@@ -67,8 +67,6 @@ function renderSubjects(user) {
 
                 if (data.subject == "pinned") {
 
-                    console.log("TEST PINNED" + data.bgColor)
-
                     //Already rendered - just update attributes in case they have changed
                     pinned_notes.style["background"] = data.bgColor
 
