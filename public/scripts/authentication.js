@@ -6,11 +6,10 @@ auth.onAuthStateChanged((user) => {
 
     // get user claims
     user.getIdTokenResult().then((idTokenResult) => {
-      console.log(idTokenResult.claims);
-      console.log(user);
+
       console.log("user is :" + user.uid);
 
-      //this line seems to create a admin field dynamically??
+      //this line seems to create a admin field dynamically
       user.admin = idTokenResult.claims.admin
 
       //change title to persons name
@@ -21,12 +20,13 @@ auth.onAuthStateChanged((user) => {
         document.querySelector('.title-text').innerHTML = title_name;
 
       })
-
+      
       setUpStudyNotes(user)
       setupUI(user)
     })
 
-  } else {    //user not logged in
+  //user not logged in  
+  } else {    
     setUpStudyNotes()
     setupUI()
   }
@@ -51,8 +51,6 @@ signupForm.addEventListener('submit', e => {
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
 
     //create a new document in users collection (firebase will create if doesn't exist)
-    //then instead of add() we use doc() where we can create out own ID(userID)
-    //it then returns a promise
     return db.collection('users').doc(cred.user.uid).set({
 
       displayName: name

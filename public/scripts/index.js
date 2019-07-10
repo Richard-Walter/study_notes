@@ -41,20 +41,22 @@ const setupUI = (user) => {
 // create pinned notes (required) - use set as it doesnt create another doc if exists
 function createPinnedNotes(user) {
 
-    db.collection('subjects').doc("pinned").set({
+    //Create a pinned notes subject if user doesn't exist
+    if (!user) {
+        db.collection('subjects').doc("pinned").set({
 
-        UID: user.uid,
-        bgColor: "#c9611b",
-        collapse: false,
-        created: firebase.firestore.Timestamp.fromDate(new Date()),
-        subject: "pinned"
+            UID: user.uid,
+            bgColor: "#c9611b",
+            collapse: false,
+            created: firebase.firestore.Timestamp.fromDate(new Date()),
+            subject: "pinned"
     });
 }
-
-
+}
 
 // render the subjects 
 function renderSubjects(user) {
+
 
     if (user) {
         db.collection('subjects').where('UID', '==', user.uid).orderBy('created').get().then((snapshot) => {
@@ -62,7 +64,10 @@ function renderSubjects(user) {
             snapshot.docs.forEach(doc => {
 
                 data = doc.data()
+
                 if (data.subject == "pinned") {
+
+                    console.log("TEST PINNED" + data.bgColor)
 
                     //Already rendered - just update attributes in case they have changed
                     pinned_notes.style["background"] = data.bgColor
@@ -88,14 +93,11 @@ function renderNotes(user) {
             note = data.note
             id = doc.id
 
-            console.log("Rendering notes: " + id, subject, note, pinned);
-
+            // console.log("Rendering notes: " + id, subject, note, pinned);
 
             if (pinned == true) {
-
                 generatePinnedNoteTemplate(note, id)
             }
-
             generateNoteTemplate(note, subject, id);
         })
     })
@@ -126,13 +128,11 @@ const createNewSubject = (subject, user) => {
 
 const renderNewSubject = (bgColor, collapse, subject) => {
 
-
     generateSubjectTemplate(bgColor, collapse, subject)
 
     //add subject to nav link and spyscroll
     generateNavbarTemplate(subject)
 
-    // addNoteListener(document.getElementById(subject), subject)
 }
 
 
@@ -197,7 +197,7 @@ function addSubjectListeners(user) {
                 e.target.parentElement.remove();
             })
 
-            //pin note to pinned list
+        //pin note to pinned list
         } else if (e.target.classList.contains('note-pin')) {
 
             const note_id = e.target.parentElement.getAttribute("id")
@@ -209,7 +209,7 @@ function addSubjectListeners(user) {
 
             generatePinnedNoteTemplate(note_text, note_id)
 
-
+        //choose color
         } else if (e.target.classList.contains('my-color-picker')) {
 
             section = e.target.parentElement.parentElement
@@ -217,7 +217,7 @@ function addSubjectListeners(user) {
 
             pickColor(e.target, id)
 
-            //delete subject
+        //delete subject
         } else if (e.target.classList.contains('subject-delete')) {
 
             section = e.target.parentElement.parentElement
@@ -228,13 +228,8 @@ function addSubjectListeners(user) {
             db.collection('notes').where('UID', '==', user.uid).where('subject', '==', subject).where('pinned', '==', true).get().then((querySnapshot) => {
 
                 querySnapshot.forEach(doc => {
-                    console.log("query data:");
-                    console.log(doc.data());   //returns an dictionary array  
-                    console.log(doc.id);   //unique id
-
                     //remove
                     pinned_note = pinned_notes.querySelector("#" + doc.id)
-                    console.log("REMOVING PINNED NOTE SINCE WE ARE DELETING SUBJECT: " + pinned_note);
                     pinned_note.remove()
 
                 });
@@ -316,7 +311,7 @@ function addPinnedNoteListener() {
 
             pickColor(e.target, "pinned");
 
-            //remove pinned note
+        //remove pinned note
         } else if (e.target.classList.contains('note-pinned')) {
 
             const note_id = e.target.parentElement.getAttribute("id")
@@ -325,7 +320,6 @@ function addPinnedNoteListener() {
 
                 pinned: false
             });
-
 
             e.target.parentElement.remove();
         }
