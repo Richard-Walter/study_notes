@@ -6,3 +6,5 @@ Sign up to create your own account and start creating subjects and notes.  Other
 
 Username: rjw@gmail.com
 Passwort: test1234
+
+Check it out here: https://study-notes-12199.firebaseapp.com/
